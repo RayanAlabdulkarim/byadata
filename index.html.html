@@ -1,0 +1,1552 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark" dir="ltr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BYADATA — by Rayan Alabdulkarim</title>
+<meta name="description" content="A knowledge hub for product & marketing analytics — CRM, retention, LTV, funnels and more. By Rayan Alabdulkarim.">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   BYADATA — Complete Design System
+   ============================================================ */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+/* ── TOKENS ── */
+:root {
+  --teal:   #00D4AA;
+  --violet: #7B61FF;
+  --blue:   #00A8FF;
+  --red:    #FF6B6B;
+
+  /* Dark mode (default) */
+  --bg:       #0A1628;
+  --bg2:      #0F1F3D;
+  --card:     #111E35;
+  --card2:    #162440;
+  --border:   rgba(0,212,170,0.12);
+  --muted:    #8A9BBE;
+  --text:     #FFFFFF;
+  --text2:    #CBD5E8;
+  --input-bg: #0A1628;
+}
+
+[data-theme="light"] {
+  --bg:       #F0F4FF;
+  --bg2:      #E4EBF8;
+  --card:     #FFFFFF;
+  --card2:    #F7F9FF;
+  --border:   rgba(0,0,0,0.08);
+  --muted:    #64748B;
+  --text:     #0A1628;
+  --text2:    #334155;
+  --input-bg: #F0F4FF;
+}
+
+/* ── BASE ── */
+html { scroll-behavior: smooth; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'DM Sans', sans-serif;
+  min-height: 100vh;
+  overflow-x: hidden;
+  transition: background 0.3s, color 0.3s;
+}
+body[data-theme="light"]::before { opacity: 0.4; }
+body::before {
+  content: '';
+  position: fixed; inset: 0;
+  background-image:
+    linear-gradient(rgba(0,212,170,0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0,212,170,0.03) 1px, transparent 1px);
+  background-size: 48px 48px;
+  pointer-events: none; z-index: 0;
+  transition: opacity 0.3s;
+}
+a { text-decoration: none; }
+
+/* ── TYPOGRAPHY ── */
+.font-syne { font-family: 'Syne', sans-serif; }
+.font-mono { font-family: 'JetBrains Mono', monospace; }
+
+/* ── SCROLLBAR ── */
+::-webkit-scrollbar { width: 5px; height: 5px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: var(--card2); border-radius: 3px; }
+
+/* ============================================================
+   NAVIGATION
+   ============================================================ */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+  background: rgba(10,22,40,0.88);
+  backdrop-filter: blur(24px);
+  border-bottom: 1px solid var(--border);
+  height: 64px;
+  transition: background 0.3s;
+}
+[data-theme="light"] nav { background: rgba(240,244,255,0.92); }
+
+.nav-inner {
+  max-width: 1240px; width: 100%; margin: 0 auto;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 32px; height: 100%;
+}
+.nav-logo {
+  font-family: 'Syne', sans-serif; font-weight: 800; font-size: 22px;
+  cursor: pointer; display: flex; align-items: center; gap: 8px;
+  color: var(--text); flex-shrink: 0;
+}
+.nav-logo span { color: var(--teal); }
+
+/* Desktop links */
+.nav-links { display: flex; align-items: center; gap: 2px; }
+.nav-link {
+  padding: 7px 14px; border-radius: 8px;
+  font-size: 14px; color: var(--muted);
+  cursor: pointer; transition: all 0.2s;
+  border: none; background: none;
+  font-family: 'DM Sans', sans-serif;
+}
+.nav-link:hover { color: var(--text); background: rgba(255,255,255,0.06); }
+.nav-link.active { color: var(--teal); background: rgba(0,212,170,0.08); }
+[data-theme="light"] .nav-link:hover { background: rgba(0,0,0,0.05); }
+
+/* Nav right cluster */
+.nav-right { display: flex; align-items: center; gap: 8px; }
+
+/* LinkedIn */
+.nav-linkedin {
+  display: flex; align-items: center; gap: 6px;
+  padding: 7px 14px; border-radius: 8px;
+  background: rgba(0,119,181,0.12); color: #0A91C7;
+  border: 1px solid rgba(0,119,181,0.25);
+  font-size: 13px; font-weight: 600;
+  cursor: pointer; transition: all 0.2s;
+  font-family: 'DM Sans', sans-serif;
+}
+.nav-linkedin:hover { background: rgba(0,119,181,0.22); }
+
+/* Theme toggle */
+.theme-toggle {
+  width: 36px; height: 36px; border-radius: 8px;
+  background: var(--card); border: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer; font-size: 16px; transition: all 0.2s;
+  flex-shrink: 0;
+}
+.theme-toggle:hover { border-color: var(--teal); }
+
+/* Language switcher */
+.lang-switcher {
+  display: flex; align-items: center;
+  background: var(--card); border: 1px solid var(--border);
+  border-radius: 8px; overflow: hidden;
+  flex-shrink: 0;
+}
+.lang-btn {
+  padding: 7px 10px; font-size: 12px; font-weight: 600;
+  cursor: pointer; border: none; background: transparent;
+  color: var(--muted); font-family: 'JetBrains Mono', monospace;
+  transition: all 0.2s; letter-spacing: 0.5px;
+}
+.lang-btn.active { background: var(--teal); color: var(--bg); }
+.lang-btn:hover:not(.active) { color: var(--text); }
+
+
+.nav-cta {
+  padding: 8px 16px; background: var(--teal); color: var(--bg);
+  border-radius: 8px; font-size: 13px; font-weight: 700;
+  cursor: pointer; border: none; font-family: 'DM Sans', sans-serif;
+  transition: opacity 0.2s; flex-shrink: 0;
+}
+.nav-cta:hover { opacity: 0.85; }
+
+/* Hamburger */
+.hamburger {
+  display: none; flex-direction: column; gap: 5px;
+  cursor: pointer; padding: 6px; background: none; border: none;
+}
+.hamburger span {
+  display: block; width: 22px; height: 2px;
+  background: var(--text); border-radius: 2px;
+  transition: all 0.3s;
+}
+.hamburger.open span:nth-child(1) { transform: rotate(45deg) translate(5px,5px); }
+.hamburger.open span:nth-child(2) { opacity: 0; }
+.hamburger.open span:nth-child(3) { transform: rotate(-45deg) translate(5px,-5px); }
+
+/* Mobile drawer */
+.mobile-menu {
+  display: none; position: fixed; top: 64px; left: 0; right: 0;
+  background: var(--bg2); border-bottom: 1px solid var(--border);
+  z-index: 199; padding: 16px 24px 24px; flex-direction: column; gap: 4px;
+}
+.mobile-menu.open { display: flex; }
+.mobile-link {
+  padding: 12px 16px; border-radius: 10px; font-size: 15px;
+  color: var(--muted); cursor: pointer; border: none;
+  background: none; text-align: left; font-family: 'DM Sans', sans-serif;
+  transition: all 0.2s; width: 100%;
+}
+.mobile-link:hover { background: rgba(0,212,170,0.06); color: var(--teal); }
+.mobile-link.active { color: var(--teal); background: rgba(0,212,170,0.08); }
+.mobile-divider { height: 1px; background: var(--border); margin: 8px 0; }
+.mobile-controls { display: flex; gap: 10px; padding: 8px 16px 0; }
+
+/* ============================================================
+   PAGE SYSTEM
+   ============================================================ */
+.page { display: none; padding-top: 64px; min-height: 100vh; position: relative; z-index: 1; }
+.page.active { display: block; animation: fadeUp 0.35s ease; }
+@keyframes fadeUp { from { opacity:0; transform:translateY(16px); } to { opacity:1; transform:translateY(0); } }
+
+/* ============================================================
+   SHARED COMPONENTS
+   ============================================================ */
+.wrap { max-width: 1240px; margin: 0 auto; padding: 0 32px; }
+.section-tag {
+  font-family: 'JetBrains Mono', monospace; font-size: 11px;
+  color: var(--teal); letter-spacing: 3px; text-transform: uppercase;
+  display: block; margin-bottom: 12px;
+}
+.section-title { font-family: 'Syne', sans-serif; font-size: 34px; font-weight: 800; letter-spacing: -1px; color: var(--text); }
+.section-header { text-align: center; margin-bottom: 48px; }
+.section-desc { font-size: 15px; color: var(--muted); margin-top: 10px; font-weight: 300; }
+
+/* Cards */
+.card {
+  background: var(--card); border: 1px solid var(--border);
+  border-radius: 16px; transition: border-color 0.25s, transform 0.25s;
+}
+.card:hover { border-color: rgba(0,212,170,0.3); }
+
+/* Buttons */
+.btn-primary {
+  padding: 12px 26px; background: var(--teal); color: var(--bg);
+  border-radius: 10px; font-size: 14px; font-weight: 700;
+  cursor: pointer; border: none; font-family: 'DM Sans', sans-serif;
+  transition: transform 0.2s, opacity 0.2s; display: inline-flex; align-items: center; gap: 6px;
+}
+.btn-primary:hover { transform: translateY(-1px); opacity: 0.9; }
+.btn-outline {
+  padding: 12px 26px; background: transparent; color: var(--text);
+  border: 1px solid var(--border); border-radius: 10px; font-size: 14px;
+  cursor: pointer; font-family: 'DM Sans', sans-serif; transition: border-color 0.2s, color 0.2s;
+  display: inline-flex; align-items: center; gap: 6px;
+}
+.btn-outline:hover { border-color: var(--teal); color: var(--teal); }
+
+/* Status badges */
+.badge {
+  padding: 3px 10px; border-radius: 100px;
+  font-size: 11px; font-family: 'JetBrains Mono', monospace;
+  display: inline-flex; align-items: center;
+}
+.badge-teal  { background: rgba(0,212,170,0.1); color: var(--teal); }
+.badge-violet{ background: rgba(123,97,255,0.1); color: var(--violet); }
+.badge-blue  { background: rgba(0,168,255,0.1);  color: var(--blue); }
+.badge-red   { background: rgba(255,107,107,0.1);color: var(--red); }
+.badge-muted { background: rgba(138,155,190,0.1);color: var(--muted); }
+
+/* Tags */
+.tag { padding: 3px 10px; border-radius: 100px; font-size: 11px; font-family: 'JetBrains Mono', monospace; display: inline-block; margin: 2px; }
+.tag-teal   { background: rgba(0,212,170,0.08); color: var(--teal); border: 1px solid rgba(0,212,170,0.2); }
+.tag-violet { background: rgba(123,97,255,0.08); color: var(--violet); border: 1px solid rgba(123,97,255,0.2); }
+.tag-blue   { background: rgba(0,168,255,0.08); color: var(--blue); border: 1px solid rgba(0,168,255,0.2); }
+
+/* Stat cards */
+.stat-card { background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 20px 22px; }
+.stat-val { font-family: 'Syne', sans-serif; font-size: 28px; font-weight: 800; margin-bottom: 4px; }
+.stat-lbl { font-size: 11px; color: var(--muted); font-family: 'JetBrains Mono', monospace; letter-spacing: 1px; }
+.stat-change { font-size: 12px; margin-top: 6px; }
+.up { color: var(--teal); } .down { color: var(--red); }
+
+/* Form elements */
+.form-group { margin-bottom: 18px; }
+.form-label { font-size: 11px; color: var(--muted); font-family: 'JetBrains Mono', monospace; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 8px; display: block; }
+.form-input, .form-textarea, .form-select {
+  width: 100%; padding: 11px 16px;
+  background: var(--input-bg); border: 1px solid var(--border);
+  border-radius: 8px; color: var(--text);
+  font-family: 'DM Sans', sans-serif; font-size: 14px; outline: none;
+  transition: border-color 0.2s;
+}
+.form-input:focus, .form-textarea:focus { border-color: var(--teal); }
+.form-textarea { height: 100px; resize: vertical; }
+.form-select option { background: var(--bg); }
+
+/* ============================================================
+   HOME PAGE
+   ============================================================ */
+.hero {
+  max-width: 1240px; margin: 0 auto;
+  padding: 96px 32px 80px;
+  display: grid; grid-template-columns: 1fr 480px;
+  gap: 64px; align-items: center;
+}
+.hero-badge {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 6px 14px; background: rgba(0,212,170,0.08);
+  border: 1px solid rgba(0,212,170,0.2); border-radius: 100px;
+  font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--teal);
+  letter-spacing: 1px; margin-bottom: 24px;
+}
+.hero-badge::before { content: '●'; font-size: 8px; animation: pulse 2s infinite; }
+@keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.3} }
+
+.hero h1 {
+  font-family: 'Syne', sans-serif;
+  font-size: clamp(40px, 5vw, 66px); font-weight: 800;
+  line-height: 1.05; letter-spacing: -2px; margin-bottom: 20px;
+  color: var(--text);
+}
+.hero h1 .accent  { color: var(--teal); }
+.hero h1 .accent2 { color: var(--violet); }
+.hero-desc { font-size: 16px; color: var(--muted); line-height: 1.75; font-weight: 300; margin-bottom: 36px; max-width: 500px; }
+.hero-btns { display: flex; gap: 12px; flex-wrap: wrap; }
+
+/* Hero visual card */
+.hero-visual {
+  background: var(--card); border: 1px solid var(--border);
+  border-radius: 20px; padding: 28px; position: relative; overflow: hidden;
+}
+.hero-visual::before {
+  content: ''; position: absolute; top:-40px; right:-40px;
+  width: 200px; height: 200px;
+  background: radial-gradient(circle, rgba(0,212,170,0.12) 0%, transparent 70%);
+}
+.visual-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px; }
+.visual-title { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--muted); letter-spacing: 2px; }
+.visual-live { padding: 3px 10px; background: rgba(0,212,170,0.1); border-radius: 100px; font-size: 10px; color: var(--teal); font-family: 'JetBrains Mono', monospace; }
+.chart-bars { display: flex; align-items: flex-end; gap: 8px; height: 130px; margin-bottom: 20px; }
+.bar { flex: 1; border-radius: 5px 5px 0 0; }
+.bar-t { background: linear-gradient(180deg, var(--teal) 0%, rgba(0,212,170,0.25) 100%); }
+.bar-v { background: linear-gradient(180deg, var(--violet) 0%, rgba(123,97,255,0.25) 100%); }
+.bar-b { background: linear-gradient(180deg, var(--blue) 0%, rgba(0,168,255,0.25) 100%); }
+.metrics-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+.metric { background: var(--bg); border: 1px solid var(--border); border-radius: 10px; padding: 12px; }
+.metric-val { font-family: 'Syne', sans-serif; font-size: 20px; font-weight: 800; color: var(--teal); }
+.metric-lbl { font-size: 10px; color: var(--muted); margin-top: 2px; font-family: 'JetBrains Mono', monospace; }
+
+/* Features */
+.features { max-width: 1240px; margin: 0 auto; padding: 20px 32px 80px; }
+.features-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+.feature-card {
+  background: var(--card); border: 1px solid var(--border);
+  border-radius: 16px; padding: 26px;
+  transition: border-color 0.25s, transform 0.25s; cursor: pointer;
+}
+.feature-card:hover { border-color: var(--teal); transform: translateY(-3px); }
+.feature-icon { width: 44px; height: 44px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 20px; margin-bottom: 14px; }
+.icon-t { background: rgba(0,212,170,0.1); }
+.icon-v { background: rgba(123,97,255,0.1); }
+.icon-b { background: rgba(0,168,255,0.1); }
+.feature-title { font-family: 'Syne', sans-serif; font-size: 16px; font-weight: 700; margin-bottom: 8px; color: var(--text); }
+.feature-desc { font-size: 13px; color: var(--muted); line-height: 1.6; font-weight: 300; }
+
+/* ============================================================
+   PRODUCT A-Z PAGE
+   ============================================================ */
+.page-hero { padding: 60px 32px 40px; max-width: 1240px; margin: 0 auto; }
+.page-hero h1 { font-family: 'Syne', sans-serif; font-size: 46px; font-weight: 800; letter-spacing: -2px; margin-bottom: 10px; color: var(--text); }
+.page-hero p { font-size: 15px; color: var(--muted); font-weight: 300; max-width: 580px; line-height: 1.7; }
+
+.az-tabs { display: flex; gap: 8px; flex-wrap: wrap; max-width: 1240px; margin: 0 auto 28px; padding: 0 32px; }
+.az-tab {
+  padding: 7px 16px; border-radius: 8px; font-size: 13px;
+  cursor: pointer; border: 1px solid var(--border);
+  background: transparent; color: var(--muted); font-family: 'DM Sans', sans-serif;
+  transition: all 0.2s;
+}
+.az-tab:hover { border-color: var(--teal); color: var(--teal); }
+.az-tab.active { background: var(--teal); color: var(--bg); border-color: var(--teal); font-weight: 600; }
+
+.az-layout { display: grid; grid-template-columns: 290px 1fr; gap: 20px; max-width: 1240px; margin: 0 auto; padding: 0 32px 80px; }
+.az-sidebar { display: flex; flex-direction: column; gap: 6px; }
+.az-item {
+  background: var(--card); border: 1px solid var(--border);
+  border-radius: 12px; padding: 14px 16px;
+  cursor: pointer; transition: all 0.2s;
+  display: flex; align-items: center; gap: 10px;
+}
+.az-item:hover { border-color: rgba(0,212,170,0.3); }
+.az-item.active { border-color: var(--teal); background: rgba(0,212,170,0.05); }
+.az-num { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--teal); width: 22px; flex-shrink: 0; }
+.az-name { font-size: 13px; font-weight: 500; color: var(--text); flex: 1; }
+
+.az-content-area {
+  background: var(--card); border: 1px solid var(--border);
+  border-radius: 16px; padding: 36px; min-height: 500px;
+}
+.az-content-area h2 { font-family: 'Syne', sans-serif; font-size: 28px; font-weight: 800; margin-bottom: 6px; color: var(--text); }
+.az-subtitle { color: var(--teal); font-family: 'JetBrains Mono', monospace; font-size: 11px; margin-bottom: 20px; letter-spacing: 2px; }
+
+/* Lang tabs inside content */
+.content-lang-tabs { display: flex; gap: 6px; margin-bottom: 24px; }
+.content-lang-btn {
+  padding: 5px 14px; border-radius: 6px; font-size: 12px;
+  cursor: pointer; border: 1px solid var(--border); background: transparent;
+  color: var(--muted); font-family: 'JetBrains Mono', monospace;
+  transition: all 0.2s;
+}
+.content-lang-btn.active { background: var(--violet); color: white; border-color: var(--violet); }
+
+.az-content-area p { font-size: 14px; color: var(--muted); line-height: 1.85; font-weight: 300; margin-bottom: 16px; }
+.az-content-area h3 { font-family: 'Syne', sans-serif; font-size: 17px; font-weight: 700; margin: 24px 0 10px; color: var(--text); }
+
+.chart-example { background: var(--bg); border: 1px solid var(--border); border-radius: 12px; padding: 20px; margin: 16px 0; }
+.chart-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--muted); margin-bottom: 14px; letter-spacing: 2px; }
+.funnel-chart { display: flex; flex-direction: column; gap: 8px; }
+.funnel-step { display: flex; align-items: center; gap: 10px; }
+.funnel-lbl { font-size: 11px; color: var(--muted); width: 80px; text-align: right; font-family: 'JetBrains Mono', monospace; }
+.funnel-track { flex: 1; background: rgba(255,255,255,0.05); border-radius: 4px; height: 30px; overflow: hidden; }
+.funnel-fill { height: 100%; border-radius: 4px; display: flex; align-items: center; padding-left: 10px; font-size: 12px; font-weight: 600; color: var(--bg); }
+.funnel-pct { font-size: 11px; color: var(--muted); width: 36px; font-family: 'JetBrains Mono', monospace; }
+
+.bar-chart-v { display: flex; align-items: flex-end; gap: 10px; height: 110px; }
+.bar-v-item { flex: 1; border-radius: 5px 5px 0 0; }
+.bar-h-chart { display: flex; flex-direction: column; gap: 10px; }
+.bar-h-row { display: flex; align-items: center; gap: 10px; }
+.bar-h-lbl { font-size: 11px; color: var(--muted); width: 70px; text-align: right; font-family: 'JetBrains Mono', monospace; }
+.bar-h-track { flex: 1; height: 20px; background: rgba(255,255,255,0.05); border-radius: 4px; overflow: hidden; }
+.bar-h-fill { height: 100%; border-radius: 4px; }
+.bar-h-val { font-size: 11px; color: var(--muted); width: 32px; font-family: 'JetBrains Mono', monospace; }
+
+.insight-box {
+  background: rgba(0,212,170,0.05); border: 1px solid rgba(0,212,170,0.2);
+  border-radius: 10px; padding: 14px 18px;
+  font-size: 13px; color: var(--teal); line-height: 1.6; margin-top: 16px;
+}
+.sql-box {
+  background: var(--bg); border: 1px solid var(--border);
+  border-radius: 10px; padding: 16px;
+  font-family: 'JetBrains Mono', monospace; font-size: 12px;
+  color: var(--teal); line-height: 1.7; margin: 12px 0;
+  overflow-x: auto; white-space: pre;
+}
+.sql-comment { color: var(--muted); }
+
+/* ============================================================
+   CRM PAGE
+   ============================================================ */
+.crm-stats { display: grid; grid-template-columns: repeat(4,1fr); gap: 14px; margin-bottom: 24px; }
+.crm-layout { display: grid; grid-template-columns: 1fr 320px; gap: 18px; }
+.table-wrap { background: var(--card); border: 1px solid var(--border); border-radius: 16px; overflow: hidden; }
+.table-head { padding: 16px 22px; border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; }
+.table-head-title { font-family: 'Syne', sans-serif; font-size: 15px; font-weight: 700; color: var(--text); }
+.search-input {
+  padding: 7px 14px; background: var(--bg); border: 1px solid var(--border);
+  border-radius: 8px; color: var(--text); font-family: 'DM Sans', sans-serif;
+  font-size: 13px; outline: none; width: 200px;
+}
+.search-input:focus { border-color: var(--teal); }
+table { width: 100%; border-collapse: collapse; }
+th { padding: 11px 22px; text-align: left; font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--muted); letter-spacing: 2px; text-transform: uppercase; border-bottom: 1px solid var(--border); background: var(--bg2); }
+td { padding: 13px 22px; font-size: 13px; border-bottom: 1px solid rgba(255,255,255,0.04); color: var(--text2); }
+[data-theme="light"] td { border-bottom: 1px solid rgba(0,0,0,0.04); }
+tr:hover td { background: rgba(0,212,170,0.02); }
+
+.crm-side { display: flex; flex-direction: column; gap: 14px; }
+.side-card { background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 20px; }
+.side-card h3 { font-family: 'Syne', sans-serif; font-size: 14px; font-weight: 700; margin-bottom: 14px; color: var(--text); }
+
+/* ============================================================
+   ANALYTICS PAGE
+   ============================================================ */
+.analytics-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: 18px; margin-top: 24px; }
+.analytics-card { background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 24px; }
+.analytics-card h3 { font-family: 'Syne', sans-serif; font-size: 16px; font-weight: 700; margin-bottom: 4px; color: var(--text); }
+.analytics-sub { font-size: 11px; color: var(--muted); margin-bottom: 18px; font-family: 'JetBrains Mono', monospace; }
+.line-chart { height: 110px; }
+.line-chart svg { width: 100%; height: 100%; }
+.kpi-grid2 { display: grid; grid-template-columns: repeat(2,1fr); gap: 10px; }
+.kpi-item { background: var(--bg); border: 1px solid var(--border); border-radius: 10px; padding: 14px; }
+.kpi-val { font-family: 'Syne', sans-serif; font-size: 22px; font-weight: 800; }
+.kpi-lbl { font-size: 10px; color: var(--muted); font-family: 'JetBrains Mono', monospace; margin-top: 2px; }
+
+/* ============================================================
+   ABOUT PAGE
+   ============================================================ */
+.about-grid {
+  max-width: 1240px; margin: 0 auto;
+  padding: 72px 32px 60px;
+  display: grid; grid-template-columns: 1fr 380px; gap: 72px; align-items: start;
+}
+.about-name { font-family: 'Syne', sans-serif; font-size: clamp(34px,5vw,54px); font-weight: 800; letter-spacing: -2px; line-height: 1.05; margin-bottom: 8px; color: var(--text); }
+.about-role { font-family: 'Syne', sans-serif; font-size: 18px; font-weight: 600; color: var(--teal); margin-bottom: 20px; }
+.about-bio { font-size: 15px; color: var(--muted); line-height: 1.8; font-weight: 300; margin-bottom: 18px; }
+.about-social { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 8px; }
+.social-btn {
+  display: inline-flex; align-items: center; gap: 7px;
+  padding: 9px 18px; border-radius: 8px; font-size: 13px; font-weight: 600;
+  cursor: pointer; text-decoration: none; transition: all 0.2s; font-family: 'DM Sans', sans-serif;
+}
+.social-li { background: rgba(0,119,181,0.12); color: #0A91C7; border: 1px solid rgba(0,119,181,0.3); }
+.social-li:hover { background: rgba(0,119,181,0.22); }
+.social-em { background: rgba(0,212,170,0.08); color: var(--teal); border: 1px solid var(--border); }
+.social-em:hover { background: rgba(0,212,170,0.15); }
+
+.about-card { background: var(--card); border: 1px solid var(--border); border-radius: 20px; padding: 28px; position: sticky; top: 84px; }
+.about-avatar { width: 72px; height: 72px; border-radius: 14px; background: linear-gradient(135deg, var(--teal), var(--violet)); display: flex; align-items: center; justify-content: center; font-family: 'Syne', sans-serif; font-size: 26px; font-weight: 800; color: var(--bg); margin-bottom: 14px; }
+.about-card-name { font-family: 'Syne', sans-serif; font-size: 17px; font-weight: 800; margin-bottom: 3px; color: var(--text); }
+.about-card-role { font-size: 11px; color: var(--muted); font-family: 'JetBrains Mono', monospace; margin-bottom: 18px; }
+.about-mini-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 18px; }
+.about-mini-stat { background: var(--bg); border: 1px solid var(--border); border-radius: 9px; padding: 11px; }
+.about-mini-val { font-family: 'Syne', sans-serif; font-size: 17px; font-weight: 800; color: var(--teal); }
+.about-mini-lbl { font-size: 10px; color: var(--muted); font-family: 'JetBrains Mono', monospace; margin-top: 1px; }
+.btn-li { display: flex; align-items: center; justify-content: center; gap: 7px; width: 100%; padding: 11px; border-radius: 8px; background: #0A91C7; color: white; font-size: 13px; font-weight: 700; text-decoration: none; transition: opacity 0.2s; font-family: 'DM Sans', sans-serif; }
+.btn-li:hover { opacity: 0.85; }
+
+.skills-wrap { max-width: 1240px; margin: 0 auto; padding: 0 32px 60px; }
+.skills-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 14px; margin-top: 24px; }
+.skill-card { background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 22px; transition: border-color 0.25s; }
+.skill-card:hover { border-color: rgba(0,212,170,0.3); }
+.skill-icon { font-size: 22px; margin-bottom: 10px; }
+.skill-title { font-family: 'Syne', sans-serif; font-size: 15px; font-weight: 700; margin-bottom: 12px; color: var(--text); }
+.skill-tags { display: flex; flex-wrap: wrap; }
+
+.strength-wrap { max-width: 1240px; margin: 0 auto; padding: 0 32px 80px; }
+.strength-box { background: linear-gradient(135deg, rgba(0,212,170,0.05), rgba(123,97,255,0.05)); border: 1px solid rgba(0,212,170,0.18); border-radius: 20px; padding: 44px; text-align: center; }
+.strength-box h2 { font-family: 'Syne', sans-serif; font-size: 26px; font-weight: 800; margin-bottom: 14px; color: var(--text); }
+.strength-box p { font-size: 15px; color: var(--muted); line-height: 1.8; max-width: 640px; margin: 0 auto 28px; font-weight: 300; }
+.strength-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 10px; text-align: left; }
+.strength-item { background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 14px; }
+.strength-tech { font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--teal); margin-bottom: 4px; }
+.strength-biz { font-size: 12px; color: var(--muted); font-weight: 300; line-height: 1.5; }
+
+/* ============================================================
+   MODAL
+   ============================================================ */
+.modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.65); z-index: 300; display: none; align-items: center; justify-content: center; padding: 20px; }
+.modal-overlay.open { display: flex; }
+.modal { background: var(--card); border: 1px solid var(--border); border-radius: 18px; padding: 32px; width: 520px; max-width: 100%; animation: fadeUp 0.25s ease; }
+.modal h2 { font-family: 'Syne', sans-serif; font-size: 20px; font-weight: 800; margin-bottom: 22px; color: var(--text); }
+.modal-footer { display: flex; gap: 10px; justify-content: flex-end; margin-top: 22px; }
+.btn-cancel { padding: 9px 18px; background: transparent; border: 1px solid var(--border); border-radius: 8px; color: var(--muted); cursor: pointer; font-family: 'DM Sans', sans-serif; font-size: 13px; }
+.btn-save { padding: 9px 22px; background: var(--teal); border: none; border-radius: 8px; color: var(--bg); font-weight: 700; cursor: pointer; font-family: 'DM Sans', sans-serif; font-size: 13px; }
+
+/* ============================================================
+   TOAST
+   ============================================================ */
+.toast { position: fixed; bottom: 24px; right: 24px; background: var(--teal); color: var(--bg); padding: 12px 20px; border-radius: 10px; font-weight: 700; font-size: 14px; z-index: 400; transform: translateY(80px); opacity: 0; transition: transform 0.3s, opacity 0.3s; font-family: 'DM Sans', sans-serif; pointer-events: none; }
+.toast.show { transform: translateY(0); opacity: 1; }
+
+/* ============================================================
+   DONUT / LEGEND
+   ============================================================ */
+.donut-wrap { display: flex; align-items: center; gap: 18px; }
+.legend-list { display: flex; flex-direction: column; gap: 7px; flex: 1; }
+.legend-item { display: flex; align-items: center; gap: 7px; font-size: 12px; color: var(--muted); }
+.legend-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+@media (max-width: 1024px) {
+  .hero { grid-template-columns: 1fr; gap: 40px; }
+  .hero-visual { display: none; }
+  .features-grid { grid-template-columns: repeat(2,1fr); }
+  .az-layout { grid-template-columns: 1fr; }
+  .az-sidebar { display: grid; grid-template-columns: repeat(2,1fr); }
+  .crm-layout { grid-template-columns: 1fr; }
+  .crm-side { display: grid; grid-template-columns: 1fr 1fr; }
+  .analytics-grid { grid-template-columns: 1fr; }
+  .about-grid { grid-template-columns: 1fr; }
+  .about-card { position: static; }
+  .skills-grid { grid-template-columns: repeat(2,1fr); }
+  .strength-grid { grid-template-columns: repeat(2,1fr); }
+}
+@media (max-width: 768px) {
+  .nav-links { display: none; }
+  .nav-right .nav-linkedin, .nav-right .theme-toggle, .nav-right .lang-switcher { display: none; }
+  .hamburger { display: flex; }
+  .features-grid { grid-template-columns: 1fr; }
+  .crm-stats { grid-template-columns: repeat(2,1fr); }
+  .crm-side { grid-template-columns: 1fr; }
+  .skills-grid { grid-template-columns: 1fr; }
+  .strength-grid { grid-template-columns: 1fr; }
+  .az-sidebar { grid-template-columns: 1fr; }
+  .hero { padding: 60px 20px 40px; }
+  .page-hero { padding: 40px 20px 28px; }
+  .wrap, .az-tabs, .az-layout, .features, .page-hero, .about-grid, .skills-wrap, .strength-wrap { padding-left: 20px; padding-right: 20px; }
+  .crm-stats { gap: 10px; }
+}
+@media (max-width: 480px) {
+  .crm-stats { grid-template-columns: 1fr 1fr; }
+  .hero h1 { font-size: 36px; }
+  .page-hero h1 { font-size: 32px; }
+}
+
+/* RTL support for Arabic */
+[dir="rtl"] {
+  text-align: right;
+}
+[dir="rtl"] .nav-inner { flex-direction: row-reverse; }
+[dir="rtl"] .hero { direction: rtl; }
+[dir="rtl"] .az-layout { direction: rtl; }
+[dir="rtl"] .funnel-lbl { text-align: left; }
+[dir="rtl"] .bar-h-lbl { text-align: left; }
+</style>
+</head>
+<body>
+
+<!-- ============================================================
+     NAVIGATION
+     ============================================================ -->
+<nav>
+  <div class="nav-inner">
+    <div class="nav-logo" onclick="showPage('home')">
+      <svg width="26" height="26" viewBox="0 0 26 26" fill="none">
+        <rect x="1" y="15" width="5" height="10" rx="2" fill="#00D4AA"/>
+        <rect x="8"  y="9"  width="5" height="16" rx="2" fill="#7B61FF" opacity="0.85"/>
+        <rect x="15" y="4"  width="5" height="21" rx="2" fill="#00D4AA"/>
+        <rect x="22" y="12" width="4" height="13" rx="2" fill="#7B61FF" opacity="0.5"/>
+      </svg>
+      BY<span>DATA</span>
+    </div>
+
+    <div class="nav-links">
+      <button class="nav-link active" onclick="showPage('home')"   id="nl-home">Home</button>
+      <button class="nav-link"        onclick="showPage('az')"     id="nl-az">Product A-Z</button>
+      <button class="nav-link"        onclick="showPage('crm')"    id="nl-crm">CRM</button>
+      <button class="nav-link"        onclick="showPage('analytics')" id="nl-analytics">Analytics</button>
+      <button class="nav-link"        onclick="showPage('about')"  id="nl-about">About</button>
+    </div>
+
+    <div class="nav-right">
+      <a class="nav-linkedin" href="https://www.linkedin.com/in/rayan-alabdualkarim/" target="_blank">
+        <span style="font-size:15px;font-weight:900;">in</span> LinkedIn
+      </a>
+      <div class="lang-switcher">
+        <button class="lang-btn active" onclick="setLang('en',this)">EN</button>
+        <button class="lang-btn"        onclick="setLang('ar',this)">AR</button>
+        <button class="lang-btn"        onclick="setLang('es',this)">ES</button>
+      </div>
+      <button class="theme-toggle" onclick="toggleTheme()" id="themeBtn" title="Toggle theme">🌙</button>
+      <button class="hamburger" id="hamburger" onclick="toggleMobileMenu()">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</nav>
+
+<!-- Mobile Menu -->
+<div class="mobile-menu" id="mobileMenu">
+  <button class="mobile-link active" onclick="showPage('home');toggleMobileMenu()">🏠 Home</button>
+  <button class="mobile-link"        onclick="showPage('az');toggleMobileMenu()">📊 Product A-Z</button>
+  <button class="mobile-link"        onclick="showPage('crm');toggleMobileMenu()">👥 CRM</button>
+  <button class="mobile-link"        onclick="showPage('analytics');toggleMobileMenu()">📈 Analytics</button>
+  <button class="mobile-link"        onclick="showPage('about');toggleMobileMenu()">👤 About</button>
+  <div class="mobile-divider"></div>
+  <div class="mobile-controls">
+    <div class="lang-switcher">
+      <button class="lang-btn active" onclick="setLang('en',this)">EN</button>
+      <button class="lang-btn"        onclick="setLang('ar',this)">AR</button>
+      <button class="lang-btn"        onclick="setLang('es',this)">ES</button>
+    </div>
+    <button class="theme-toggle" onclick="toggleTheme()">🌙</button>
+  </div>
+  <a class="mobile-link" href="https://www.linkedin.com/in/rayan-alabdualkarim/" target="_blank" style="display:flex;align-items:center;gap:8px;">
+    <span style="font-weight:900;">in</span> LinkedIn
+  </a>
+</div>
+
+<!-- ============================================================
+     HOME PAGE
+     ============================================================ -->
+<div class="page active" id="page-home">
+  <div class="hero">
+    <div>
+      <div class="hero-badge" data-i18n="hero.badge">LIVE · BYADATA KNOWLEDGE HUB</div>
+      <h1 data-i18n="hero.h1">From Raw Data<br/>to <span class="accent">Strategic</span><br/><span class="accent2">Decisions.</span></h1>
+      <p class="hero-desc" data-i18n="hero.desc">A knowledge hub by a Marketing & Product Analyst specializing in CRM segmentation, retention modeling, LTV optimization, and paid media measurement — built for analysts and curious minds across Arabic, English & Spanish.</p>
+      <div class="hero-btns">
+        <button class="btn-primary" onclick="showPage('az')"        data-i18n="hero.cta1">Explore Product A-Z</button>
+        <button class="btn-outline" onclick="showPage('about')"     data-i18n="hero.cta2">About Rayan</button>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <div class="visual-header">
+        <span class="visual-title">PRODUCT FUNNEL ANALYSIS</span>
+        <span class="visual-live">LIVE</span>
+      </div>
+      <div class="chart-bars">
+        <div class="bar bar-t" style="height:58%"></div>
+        <div class="bar bar-v" style="height:82%"></div>
+        <div class="bar bar-t" style="height:44%"></div>
+        <div class="bar bar-b" style="height:100%"></div>
+        <div class="bar bar-v" style="height:68%"></div>
+        <div class="bar bar-t" style="height:54%"></div>
+        <div class="bar bar-b" style="height:78%"></div>
+      </div>
+      <div class="metrics-row">
+        <div class="metric"><div class="metric-val">84%</div><div class="metric-lbl">RETENTION</div></div>
+        <div class="metric"><div class="metric-val">3.2x</div><div class="metric-lbl">LTV GROWTH</div></div>
+        <div class="metric"><div class="metric-val">6.2%</div><div class="metric-lbl">CHURN</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="features">
+    <div class="section-header">
+      <span class="section-tag" data-i18n="home.feat.tag">// what you'll learn</span>
+      <h2 class="section-title" data-i18n="home.feat.title">Everything a Product Analyst Needs</h2>
+      <p class="section-desc" data-i18n="home.feat.desc">Real frameworks. Real SQL. Real decisions.</p>
+    </div>
+    <div class="features-grid">
+      <div class="feature-card" onclick="showPage('az')">
+        <div class="feature-icon icon-t">📊</div>
+        <div class="feature-title" data-i18n="feat.az.title">Product Analysis A-Z</div>
+        <div class="feature-desc"  data-i18n="feat.az.desc">12 frameworks — from funnel to cannibalization. Every chart explained with real SQL.</div>
+      </div>
+      <div class="feature-card" onclick="showPage('crm')">
+        <div class="feature-icon icon-v">👥</div>
+        <div class="feature-title" data-i18n="feat.crm.title">CRM Intelligence</div>
+        <div class="feature-desc"  data-i18n="feat.crm.desc">RFM segmentation, LTV modeling, lifecycle stages — understand your users deeply.</div>
+      </div>
+      <div class="feature-card" onclick="showPage('analytics')">
+        <div class="feature-icon icon-b">📈</div>
+        <div class="feature-title" data-i18n="feat.analytics.title">Data Analytics</div>
+        <div class="feature-desc"  data-i18n="feat.analytics.desc">Real dashboards, real KPIs. Turn data into executive-level decisions.</div>
+      </div>
+      <div class="feature-card" onclick="showPage('az');setTimeout(()=>loadAZ('rfm'),100)">
+        <div class="feature-icon icon-t">🎯</div>
+        <div class="feature-title" data-i18n="feat.rfm.title">RFM Segmentation</div>
+        <div class="feature-desc"  data-i18n="feat.rfm.desc">Build customer segments from scratch using Recency, Frequency and Monetary value.</div>
+      </div>
+      <div class="feature-card" onclick="showPage('az');setTimeout(()=>loadAZ('ltv'),100)">
+        <div class="feature-icon icon-v">💰</div>
+        <div class="feature-title" data-i18n="feat.ltv.title">LTV Modeling</div>
+        <div class="feature-desc"  data-i18n="feat.ltv.desc">Calculate and grow customer lifetime value — no pre-built columns needed.</div>
+      </div>
+      <div class="feature-card" onclick="showPage('az');setTimeout(()=>loadAZ('paid'),100)">
+        <div class="feature-icon icon-b">📡</div>
+        <div class="feature-title" data-i18n="feat.paid.title">Paid Media Measurement</div>
+        <div class="feature-desc"  data-i18n="feat.paid.desc">CPI, CPC, CPO, ROI — measure every channel. Know what's working and what's not.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================
+     PRODUCT A-Z PAGE
+     ============================================================ -->
+<div class="page" id="page-az">
+  <div class="page-hero">
+    <span class="section-tag">// product analysis</span>
+    <h1>Product Analysis <span style="color:var(--teal)">A to Z</span></h1>
+    <p data-i18n="az.desc">12 frameworks every analyst needs — with the right chart, real SQL, and pro tips for each case.</p>
+  </div>
+
+  <div class="az-tabs" id="azTabs">
+    <button class="az-tab active" onclick="filterAZ('all',this)"        data-i18n="az.tab.all">All</button>
+    <button class="az-tab"        onclick="filterAZ('funnel',this)"     data-i18n="az.tab.funnel">Funnel</button>
+    <button class="az-tab"        onclick="filterAZ('retention',this)"  data-i18n="az.tab.retention">Retention</button>
+    <button class="az-tab"        onclick="filterAZ('growth',this)"     data-i18n="az.tab.growth">Growth</button>
+    <button class="az-tab"        onclick="filterAZ('marketing',this)"  data-i18n="az.tab.marketing">Marketing</button>
+  </div>
+
+  <div class="az-layout">
+    <div class="az-sidebar" id="azSidebar"></div>
+    <div class="az-content-area" id="azContent"></div>
+  </div>
+</div>
+
+<!-- ============================================================
+     CRM PAGE
+     ============================================================ -->
+<div class="page" id="page-crm">
+  <div class="page-hero">
+    <span class="section-tag">// crm intelligence</span>
+    <h1>CRM <span style="color:var(--teal)">Dashboard</span></h1>
+    <p data-i18n="crm.desc">Track, segment and understand your users at every stage of their journey.</p>
+  </div>
+
+  <div class="wrap" style="padding-bottom:80px;">
+    <div class="crm-stats">
+      <div class="stat-card"><div class="stat-val" style="color:var(--teal)">12,481</div><div class="stat-lbl">TOTAL USERS</div><div class="stat-change up">↑ 12.4% this month</div></div>
+      <div class="stat-card"><div class="stat-val" style="color:var(--violet)">3,204</div><div class="stat-lbl">ACTIVE USERS</div><div class="stat-change up">↑ 8.1% this week</div></div>
+      <div class="stat-card"><div class="stat-val" style="color:var(--blue)">84%</div><div class="stat-lbl">RETENTION RATE</div><div class="stat-change up">↑ 2.3% vs last month</div></div>
+      <div class="stat-card"><div class="stat-val" style="color:var(--red)">6.2%</div><div class="stat-lbl">CHURN RATE</div><div class="stat-change down">↑ 0.8% vs last month</div></div>
+    </div>
+
+    <div class="crm-layout">
+      <div class="table-wrap">
+        <div class="table-head">
+          <span class="table-head-title">Users</span>
+          <input class="search-input" placeholder="🔍  Search users..." oninput="filterTable(this.value)"/>
+        </div>
+        <div style="overflow-x:auto;">
+          <table id="crmTable">
+            <thead><tr>
+              <th>Name</th><th>Segment</th><th>Last Active</th><th>Status</th><th>LTV</th>
+            </tr></thead>
+            <tbody>
+              <tr><td>Ahmed Al-Rashid</td><td><span class="badge badge-teal">Power User</span></td><td style="color:var(--muted)">2h ago</td><td><span class="badge badge-teal">Active</span></td><td style="color:var(--teal);font-weight:700">$840</td></tr>
+              <tr><td>Sara Mohammed</td><td><span class="badge badge-violet">Regular</span></td><td style="color:var(--muted)">1d ago</td><td><span class="badge badge-teal">Active</span></td><td style="color:var(--teal);font-weight:700">$320</td></tr>
+              <tr><td>Carlos Ruiz</td><td><span class="badge badge-blue">New User</span></td><td style="color:var(--muted)">3h ago</td><td><span class="badge badge-blue">Onboarding</span></td><td style="color:var(--muted)">$49</td></tr>
+              <tr><td>Fatima Al-Zahra</td><td><span class="badge badge-teal">Power User</span></td><td style="color:var(--muted)">5h ago</td><td><span class="badge badge-teal">Active</span></td><td style="color:var(--teal);font-weight:700">$1,240</td></tr>
+              <tr><td>Miguel Torres</td><td><span class="badge badge-red">At Risk</span></td><td style="color:var(--muted)">8d ago</td><td><span class="badge badge-red">At Risk</span></td><td style="color:var(--muted)">$180</td></tr>
+              <tr><td>Nora Khalid</td><td><span class="badge badge-teal">Power User</span></td><td style="color:var(--muted)">1h ago</td><td><span class="badge badge-teal">Active</span></td><td style="color:var(--teal);font-weight:700">$960</td></tr>
+              <tr><td>Omar Saud</td><td><span class="badge badge-muted">Dormant</span></td><td style="color:var(--muted)">42d ago</td><td><span class="badge badge-muted">Dormant</span></td><td style="color:var(--muted)">$199</td></tr>
+              <tr><td>Layla Hassan</td><td><span class="badge badge-violet">Regular</span></td><td style="color:var(--muted)">2d ago</td><td><span class="badge badge-teal">Active</span></td><td style="color:var(--teal);font-weight:700">$228</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="crm-side">
+        <div class="side-card">
+          <h3>User Segments</h3>
+          <div class="donut-wrap">
+            <svg width="80" height="80" viewBox="0 0 36 36" style="transform:rotate(-90deg)">
+              <circle cx="18" cy="18" r="14" fill="none" stroke="var(--bg2)" stroke-width="4"/>
+              <circle cx="18" cy="18" r="14" fill="none" stroke="#00D4AA" stroke-width="4" stroke-dasharray="40 48" stroke-dashoffset="0"/>
+              <circle cx="18" cy="18" r="14" fill="none" stroke="#7B61FF" stroke-width="4" stroke-dasharray="25 63" stroke-dashoffset="-40"/>
+              <circle cx="18" cy="18" r="14" fill="none" stroke="#00A8FF" stroke-width="4" stroke-dasharray="14 74" stroke-dashoffset="-65"/>
+              <circle cx="18" cy="18" r="14" fill="none" stroke="#FF6B6B" stroke-width="4" stroke-dasharray="9 79"  stroke-dashoffset="-79"/>
+            </svg>
+            <div class="legend-list">
+              <div class="legend-item"><div class="legend-dot" style="background:var(--teal)"></div>Power User 45%</div>
+              <div class="legend-item"><div class="legend-dot" style="background:var(--violet)"></div>Regular 28%</div>
+              <div class="legend-item"><div class="legend-dot" style="background:var(--blue)"></div>New 16%</div>
+              <div class="legend-item"><div class="legend-dot" style="background:var(--red)"></div>At Risk 11%</div>
+            </div>
+          </div>
+        </div>
+        <div class="side-card">
+          <h3>Top Channels</h3>
+          <div class="bar-h-chart">
+            <div class="bar-h-row"><span class="bar-h-lbl">Organic</span><div class="bar-h-track"><div class="bar-h-fill" style="width:72%;background:var(--teal)"></div></div><span class="bar-h-val">72%</span></div>
+            <div class="bar-h-row"><span class="bar-h-lbl">Referral</span><div class="bar-h-track"><div class="bar-h-fill" style="width:18%;background:var(--violet)"></div></div><span class="bar-h-val">18%</span></div>
+            <div class="bar-h-row"><span class="bar-h-lbl">Paid</span><div class="bar-h-track"><div class="bar-h-fill" style="width:10%;background:var(--blue)"></div></div><span class="bar-h-val">10%</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================
+     ANALYTICS PAGE
+     ============================================================ -->
+<div class="page" id="page-analytics">
+  <div class="page-hero">
+    <span class="section-tag">// data analytics</span>
+    <h1>Analytics <span style="color:var(--teal)">Dashboard</span></h1>
+    <p data-i18n="analytics.desc">Real metrics, real decisions. Track what matters most for your product.</p>
+  </div>
+  <div class="wrap" style="padding-bottom:80px;">
+    <div class="crm-stats">
+      <div class="stat-card"><div class="stat-val" style="color:var(--teal)">48.2K</div><div class="stat-lbl">MONTHLY ACTIVE</div><div class="stat-change up">↑ 18.3%</div></div>
+      <div class="stat-card"><div class="stat-val" style="color:var(--violet)">6.4</div><div class="stat-lbl">AVG SESSION (MIN)</div><div class="stat-change up">↑ 1.2 min</div></div>
+      <div class="stat-card"><div class="stat-val" style="color:var(--blue)">2.8%</div><div class="stat-lbl">CONVERSION RATE</div><div class="stat-change up">↑ 0.4%</div></div>
+      <div class="stat-card"><div class="stat-val" style="color:var(--teal)">$42</div><div class="stat-lbl">AVG REVENUE/USER</div><div class="stat-change up">↑ $6 vs last Q</div></div>
+    </div>
+    <div class="analytics-grid">
+      <div class="analytics-card">
+        <h3>User Growth</h3>
+        <div class="analytics-sub">MONTHLY ACTIVE USERS — LAST 12 MONTHS</div>
+        <div class="line-chart">
+          <svg viewBox="0 0 400 110" preserveAspectRatio="none">
+            <defs><linearGradient id="g1" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#00D4AA" stop-opacity="0.3"/><stop offset="100%" stop-color="#00D4AA" stop-opacity="0"/></linearGradient></defs>
+            <path d="M0,88 L36,78 L72,68 L108,74 L144,58 L180,48 L216,53 L252,38 L288,28 L324,22 L360,13 L400,5" fill="none" stroke="#00D4AA" stroke-width="2.5" stroke-linejoin="round"/>
+            <path d="M0,88 L36,78 L72,68 L108,74 L144,58 L180,48 L216,53 L252,38 L288,28 L324,22 L360,13 L400,5 L400,110 L0,110Z" fill="url(#g1)"/>
+          </svg>
+        </div>
+      </div>
+      <div class="analytics-card">
+        <h3>Revenue by Channel</h3>
+        <div class="analytics-sub">BREAKDOWN — THIS QUARTER</div>
+        <div class="bar-h-chart" style="margin-top:10px">
+          <div class="bar-h-row"><span class="bar-h-lbl">Product</span><div class="bar-h-track"><div class="bar-h-fill" style="width:65%;background:var(--teal)"></div></div><span class="bar-h-val">65%</span></div>
+          <div class="bar-h-row"><span class="bar-h-lbl">Services</span><div class="bar-h-track"><div class="bar-h-fill" style="width:25%;background:var(--violet)"></div></div><span class="bar-h-val">25%</span></div>
+          <div class="bar-h-row"><span class="bar-h-lbl">Partners</span><div class="bar-h-track"><div class="bar-h-fill" style="width:10%;background:var(--blue)"></div></div><span class="bar-h-val">10%</span></div>
+        </div>
+      </div>
+      <div class="analytics-card">
+        <h3>Retention Cohorts</h3>
+        <div class="analytics-sub">WEEK-OVER-WEEK RETENTION %</div>
+        <div class="line-chart">
+          <svg viewBox="0 0 400 110" preserveAspectRatio="none">
+            <defs><linearGradient id="g2" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#7B61FF" stop-opacity="0.3"/><stop offset="100%" stop-color="#7B61FF" stop-opacity="0"/></linearGradient></defs>
+            <path d="M0,5 L57,20 L114,34 L171,44 L228,53 L285,61 L342,67 L400,72" fill="none" stroke="#7B61FF" stroke-width="2.5"/>
+            <path d="M0,5 L57,20 L114,34 L171,44 L228,53 L285,61 L342,67 L400,72 L400,110 L0,110Z" fill="url(#g2)"/>
+          </svg>
+        </div>
+      </div>
+      <div class="analytics-card">
+        <h3>Key KPIs</h3>
+        <div class="analytics-sub">PRODUCT HEALTH METRICS</div>
+        <div class="kpi-grid2">
+          <div class="kpi-item"><div class="kpi-val" style="color:var(--teal)">84%</div><div class="kpi-lbl">D30 RETENTION</div></div>
+          <div class="kpi-item"><div class="kpi-val" style="color:var(--violet)">3.8</div><div class="kpi-lbl">NPS SCORE</div></div>
+          <div class="kpi-item"><div class="kpi-val" style="color:var(--blue)">4.2x</div><div class="kpi-lbl">DAU/MAU</div></div>
+          <div class="kpi-item"><div class="kpi-val" style="color:var(--teal)">$28</div><div class="kpi-lbl">CAC</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================
+     ABOUT PAGE
+     ============================================================ -->
+<div class="page" id="page-about">
+  <div class="about-grid">
+    <div>
+      <span class="section-tag">// about the creator</span>
+      <div class="about-name">Rayan<br/>Alabdulkarim</div>
+      <div class="about-role">Marketing & Product Analyst</div>
+      <p class="about-bio">I sit at the intersection of data, product, and marketing strategy. My work goes beyond reporting — I translate raw behavioral data into growth decisions, LTV improvements, and sustainable product strategies.</p>
+      <p class="about-bio">I've built automated data pipelines in Python, engineered CRM segmentation logic from scratch using SQL, measured paid media performance via the Adjust API, and designed analytics frameworks for QSR product launches — from soft launch to scale. I think in systems: not just "how much did we sell?" but whether it's sustainable, margin-healthy, frequency-improving, and LTV-positive.</p>
+      <div class="about-social">
+        <a class="social-btn social-li" href="https://www.linkedin.com/in/rayan-alabdualkarim/" target="_blank">
+          <span style="font-weight:900;font-size:15px;">in</span> LinkedIn
+        </a>
+        <a class="social-btn social-em" href="mailto:rayan@byadata.com">✉ rayan@byadata.com</a>
+      </div>
+    </div>
+    <div>
+      <div class="about-card">
+        <div class="about-avatar">RA</div>
+        <div class="about-card-name">Rayan Alabdulkarim</div>
+        <div class="about-card-role">MARKETING & PRODUCT ANALYST · KSA</div>
+        <div class="about-mini-stats">
+          <div class="about-mini-stat"><div class="about-mini-val">SQL</div><div class="about-mini-lbl">ADVANCED</div></div>
+          <div class="about-mini-stat"><div class="about-mini-val">Python</div><div class="about-mini-lbl">PIPELINES</div></div>
+          <div class="about-mini-stat"><div class="about-mini-val">CRM</div><div class="about-mini-lbl">RFM · LTV</div></div>
+          <div class="about-mini-stat"><div class="about-mini-val">BI</div><div class="about-mini-lbl">POWER BI</div></div>
+        </div>
+        <a class="btn-li" href="https://www.linkedin.com/in/rayan-alabdualkarim/" target="_blank">
+          <span style="font-weight:900;">in</span> Connect on LinkedIn
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <div class="skills-wrap">
+    <div class="section-header" style="text-align:left">
+      <span class="section-tag">// technical skills</span>
+      <h2 class="section-title">What I Work With</h2>
+    </div>
+    <div class="skills-grid">
+      <div class="skill-card"><div class="skill-icon">🗄️</div><div class="skill-title">SQL — Advanced</div><div class="skill-tags"><span class="tag tag-teal">Window Functions</span><span class="tag tag-teal">CTEs</span><span class="tag tag-teal">Cohort Logic</span><span class="tag tag-teal">RFM Queries</span><span class="tag tag-teal">Date Engineering</span><span class="tag tag-teal">Frequency Buckets</span><span class="tag tag-teal">Behavioral Filtering</span><span class="tag tag-teal">Mapping Tables</span></div></div>
+      <div class="skill-card"><div class="skill-icon">🐍</div><div class="skill-title">Python</div><div class="skill-tags"><span class="tag tag-violet">Pandas</span><span class="tag tag-violet">Adjust API</span><span class="tag tag-violet">Automated Schedulers</span><span class="tag tag-violet">CSV Pipelines</span><span class="tag tag-violet">KPI Logic</span><span class="tag tag-violet">Prophet Forecasting</span><span class="tag tag-violet">Dashboard Automation</span></div></div>
+      <div class="skill-card"><div class="skill-icon">📊</div><div class="skill-title">BI & Dashboards</div><div class="skill-tags"><span class="tag tag-blue">Power BI</span><span class="tag tag-blue">DAX Measures</span><span class="tag tag-blue">Metabase</span><span class="tag tag-blue">KPI Tracking</span><span class="tag tag-blue">Heatmaps</span><span class="tag tag-blue">Behavioral Matrices</span></div></div>
+      <div class="skill-card"><div class="skill-icon">👥</div><div class="skill-title">CRM & Lifecycle</div><div class="skill-tags"><span class="tag tag-teal">RFM Segmentation</span><span class="tag tag-teal">Behavioral Triggers</span><span class="tag tag-teal">Reactivation Logic</span><span class="tag tag-teal">Champion/At-Risk</span><span class="tag tag-teal">Suppression Logic</span><span class="tag tag-teal">Incremental Orders</span></div></div>
+      <div class="skill-card"><div class="skill-icon">📈</div><div class="skill-title">Product Analytics</div><div class="skill-tags"><span class="tag tag-violet">Funnel Analysis</span><span class="tag tag-violet">Retention Modeling</span><span class="tag tag-violet">Cohort Analysis</span><span class="tag tag-violet">A/B Testing</span><span class="tag tag-violet">LTV Modeling</span><span class="tag tag-violet">Attach Rate</span><span class="tag tag-violet">Cannibalization Detection</span><span class="tag tag-violet">Frequency Segmentation</span></div></div>
+      <div class="skill-card"><div class="skill-icon">🎯</div><div class="skill-title">Performance Marketing</div><div class="skill-tags"><span class="tag tag-blue">Adjust API</span><span class="tag tag-blue">CPI / CPC / CPO</span><span class="tag tag-blue">ROI Modeling</span><span class="tag tag-blue">Influencer Attribution</span><span class="tag tag-blue">CAC Tracking</span><span class="tag tag-blue">LTV vs CAC</span><span class="tag tag-blue">Paid Media KPIs</span></div></div>
+    </div>
+  </div>
+
+  <div class="strength-wrap">
+    <div class="strength-box">
+      <span class="section-tag" style="display:block;margin-bottom:12px;">// competitive advantage</span>
+      <h2>Technical Skill × Business Impact</h2>
+      <p>The real edge isn't just knowing SQL or Python — it's turning data into a decision that grows revenue, improves LTV, and scales sustainably.</p>
+      <div class="strength-grid">
+        <div class="strength-item"><div class="strength-tech">SQL</div><div class="strength-biz">Segment logic & campaign measurement</div></div>
+        <div class="strength-item"><div class="strength-tech">Python</div><div class="strength-biz">Automated pipelines & forecasting</div></div>
+        <div class="strength-item"><div class="strength-tech">Power BI</div><div class="strength-biz">Executive dashboards & decision tools</div></div>
+        <div class="strength-item"><div class="strength-tech">Cohort Logic</div><div class="strength-biz">Retention growth measurement</div></div>
+        <div class="strength-item"><div class="strength-tech">Frequency Analysis</div><div class="strength-biz">LTV & repeat behavior growth</div></div>
+        <div class="strength-item"><div class="strength-tech">Margin Modeling</div><div class="strength-biz">Sustainable product strategy (65–75% targets)</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================
+     MODAL
+     ============================================================ -->
+<div class="modal-overlay" id="modal" onclick="if(event.target===this)closeModal()">
+  <div class="modal">
+    <h2 id="modalTitle">Add New Page</h2>
+    <div id="modalBody">
+      <div class="form-group"><label class="form-label">Page Name</label><input class="form-input" placeholder="e.g. Blog"/></div>
+      <div class="form-group"><label class="form-label">URL Slug</label><input class="form-input" placeholder="/blog"/></div>
+      <div class="form-group"><label class="form-label">Page Type</label><select class="form-select"><option>Content Page</option><option>Dashboard</option><option>Landing Page</option></select></div>
+      <div class="form-group"><label class="form-label">Visibility</label><select class="form-select"><option>Public</option><option>Hidden from Nav</option></select></div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn-cancel" onclick="closeModal()">Cancel</button>
+      <button class="btn-save" onclick="closeModal();showToast('✅ Saved successfully!')">Save</button>
+    </div>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<!-- ============================================================
+     JAVASCRIPT
+     ============================================================ -->
+<script>
+'use strict';
+
+/* ── THEME ── */
+const saved = localStorage.getItem('byadata-theme') || 'dark';
+setTheme(saved, false);
+
+function setTheme(t, save=true) {
+  document.documentElement.setAttribute('data-theme', t);
+  document.body.setAttribute('data-theme', t);
+  document.getElementById('themeBtn').textContent = t==='dark' ? '🌙' : '☀️';
+  if(save) localStorage.setItem('byadata-theme', t);
+}
+function toggleTheme() {
+  const cur = document.documentElement.getAttribute('data-theme');
+  setTheme(cur==='dark' ? 'light' : 'dark');
+}
+
+/* ── LANGUAGE ── */
+const i18n = {
+  en: {
+    'hero.badge':'LIVE · BYADATA KNOWLEDGE HUB',
+    'hero.h1':'From Raw Data<br/>to <span class="accent">Strategic</span><br/><span class="accent2">Decisions.</span>',
+    'hero.desc':'A knowledge hub by a Marketing & Product Analyst — CRM segmentation, retention modeling, LTV optimization and paid media measurement for analysts everywhere.',
+    'hero.cta1':'Explore Product A-Z','hero.cta2':'About Rayan',
+    'home.feat.tag':'// what you\'ll learn','home.feat.title':'Everything a Product Analyst Needs','home.feat.desc':'Real frameworks. Real SQL. Real decisions.',
+    'feat.az.title':'Product Analysis A-Z','feat.az.desc':'12 frameworks — from funnel to cannibalization. Every chart explained with real SQL.',
+    'feat.crm.title':'CRM Intelligence','feat.crm.desc':'RFM segmentation, LTV modeling, lifecycle stages — understand your users deeply.',
+    'feat.analytics.title':'Data Analytics','feat.analytics.desc':'Real dashboards, real KPIs. Turn data into executive-level decisions.',
+    'feat.rfm.title':'RFM Segmentation','feat.rfm.desc':'Build customer segments from scratch using Recency, Frequency and Monetary value.',
+    'feat.ltv.title':'LTV Modeling','feat.ltv.desc':'Calculate and grow customer lifetime value — no pre-built columns needed.',
+    'feat.paid.title':'Paid Media Measurement','feat.paid.desc':'CPI, CPC, CPO, ROI — measure every channel.',
+    'az.desc':'12 frameworks every analyst needs — with the right chart, real SQL, and pro tips.',
+    'az.tab.all':'All','az.tab.funnel':'Funnel','az.tab.retention':'Retention','az.tab.growth':'Growth','az.tab.marketing':'Marketing',
+    'crm.desc':'Track, segment and understand your users at every stage.',
+    'analytics.desc':'Real metrics, real decisions. Track what matters most.',
+  },
+  ar: {
+    'hero.badge':'مباشر · مركز معرفة بياداتا',
+    'hero.h1':'من البيانات الخام<br/>إلى <span class="accent">قرارات</span><br/><span class="accent2">استراتيجية.</span>',
+    'hero.desc':'مركز معرفة من محلل تسويق ومنتج — تجزئة CRM، نمذجة الاحتفاظ، تحسين LTV وقياس الإعلانات المدفوعة.',
+    'hero.cta1':'استكشف التحليل A-Z','hero.cta2':'عن ريان',
+    'home.feat.tag':'// ما ستتعلمه','home.feat.title':'كل ما يحتاجه محلل المنتج','home.feat.desc':'أطر حقيقية. SQL حقيقي. قرارات حقيقية.',
+    'feat.az.title':'تحليل المنتج A-Z','feat.az.desc':'12 إطار عمل — من القمع إلى تحليل التآكل. كل مخطط موضح بـ SQL حقيقي.',
+    'feat.crm.title':'ذكاء CRM','feat.crm.desc':'تجزئة RFM، نمذجة LTV، مراحل دورة الحياة — افهم مستخدميك بعمق.',
+    'feat.analytics.title':'تحليلات البيانات','feat.analytics.desc':'لوحات معلومات حقيقية. حول البيانات إلى قرارات تنفيذية.',
+    'feat.rfm.title':'تجزئة RFM','feat.rfm.desc':'بناء شرائح العملاء من الصفر باستخدام الحداثة والتكرار والقيمة النقدية.',
+    'feat.ltv.title':'نمذجة LTV','feat.ltv.desc':'احسب قيمة عمر العميل وانمّها — دون حاجة لأعمدة جاهزة.',
+    'feat.paid.title':'قياس الإعلانات المدفوعة','feat.paid.desc':'CPI, CPC, CPO, ROI — قس كل قناة.',
+    'az.desc':'12 إطار عمل يحتاجه كل محلل — مع المخطط الصحيح وSQL حقيقي.',
+    'az.tab.all':'الكل','az.tab.funnel':'القمع','az.tab.retention':'الاحتفاظ','az.tab.growth':'النمو','az.tab.marketing':'التسويق',
+    'crm.desc':'تتبع وتقسيم وفهم مستخدميك في كل مرحلة.',
+    'analytics.desc':'مقاييس حقيقية وقرارات حقيقية.',
+  },
+  es: {
+    'hero.badge':'EN VIVO · HUB DE CONOCIMIENTO BYADATA',
+    'hero.h1':'De Datos Crudos<br/>a <span class="accent">Decisiones</span><br/><span class="accent2">Estratégicas.</span>',
+    'hero.desc':'Un hub de conocimiento de un Analista de Marketing y Producto — segmentación CRM, modelado de retención, optimización LTV y medición de medios pagados.',
+    'hero.cta1':'Explorar Producto A-Z','hero.cta2':'Sobre Rayan',
+    'home.feat.tag':'// qué aprenderás','home.feat.title':'Todo lo que un Analista de Producto Necesita','home.feat.desc':'Marcos reales. SQL real. Decisiones reales.',
+    'feat.az.title':'Análisis de Producto A-Z','feat.az.desc':'12 marcos — desde embudos hasta canibalización. Cada gráfico explicado con SQL real.',
+    'feat.crm.title':'Inteligencia CRM','feat.crm.desc':'Segmentación RFM, modelado LTV, etapas del ciclo de vida.',
+    'feat.analytics.title':'Analítica de Datos','feat.analytics.desc':'Dashboards reales. Convierte datos en decisiones ejecutivas.',
+    'feat.rfm.title':'Segmentación RFM','feat.rfm.desc':'Construye segmentos de clientes desde cero con Recencia, Frecuencia y Valor.',
+    'feat.ltv.title':'Modelado LTV','feat.ltv.desc':'Calcula y aumenta el valor de vida del cliente — sin columnas prefabricadas.',
+    'feat.paid.title':'Medición de Medios Pagados','feat.paid.desc':'CPI, CPC, CPO, ROI — mide cada canal.',
+    'az.desc':'12 marcos que todo analista necesita — con el gráfico correcto y SQL real.',
+    'az.tab.all':'Todo','az.tab.funnel':'Embudo','az.tab.retention':'Retención','az.tab.growth':'Crecimiento','az.tab.marketing':'Marketing',
+    'crm.desc':'Sigue, segmenta y comprende a tus usuarios en cada etapa.',
+    'analytics.desc':'Métricas reales, decisiones reales.',
+  }
+};
+let currentLang = localStorage.getItem('byadata-lang') || 'en';
+applyLang(currentLang, false);
+
+function setLang(lang, btn) {
+  currentLang = lang;
+  localStorage.setItem('byadata-lang', lang);
+  applyLang(lang, true);
+  // Update both desktop and mobile lang buttons
+  document.querySelectorAll('.lang-btn').forEach(b => {
+    b.classList.toggle('active', b.textContent.toLowerCase() === lang);
+  });
+  // RTL for Arabic
+  document.documentElement.setAttribute('dir', lang==='ar' ? 'rtl' : 'ltr');
+}
+
+function applyLang(lang, animate) {
+  const t = i18n[lang] || i18n.en;
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const key = el.getAttribute('data-i18n');
+    if(t[key] !== undefined) el.innerHTML = t[key];
+  });
+  document.documentElement.setAttribute('dir', lang==='ar' ? 'rtl' : 'ltr');
+  document.querySelectorAll('.lang-btn').forEach(b => {
+    b.classList.toggle('active', b.textContent.toLowerCase() === lang);
+  });
+  // Re-render A-Z if on that page
+  if(document.getElementById('page-az').classList.contains('active')) {
+    buildAZSidebar();
+  }
+}
+
+/* ── PAGE NAVIGATION ── */
+function showPage(id) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.getElementById('page-'+id).classList.add('active');
+  // Nav active states
+  const ids = ['home','az','crm','analytics','about'];
+  ids.forEach(n => {
+    const el = document.getElementById('nl-'+n);
+    if(el) el.classList.toggle('active', n===id);
+  });
+  // Mobile links
+  document.querySelectorAll('.mobile-link').forEach((l,i) => {
+    l.classList.toggle('active', i === ids.indexOf(id));
+  });
+  window.scrollTo(0,0);
+  if(id==='az') { buildAZSidebar(); loadAZ(Object.keys(AZ_DATA)[0]); }
+}
+
+/* ── MOBILE MENU ── */
+function toggleMobileMenu() {
+  const m = document.getElementById('mobileMenu');
+  const h = document.getElementById('hamburger');
+  m.classList.toggle('open');
+  h.classList.toggle('open');
+}
+
+/* ── MODAL ── */
+const modalTitles = { addPage:'Add New Page', editPage:'Edit Page', addContent:'Add New Content', editContent:'Edit Content' };
+function openModal(type) {
+  document.getElementById('modalTitle').textContent = modalTitles[type] || 'Edit';
+  document.getElementById('modal').classList.add('open');
+}
+function closeModal() { document.getElementById('modal').classList.remove('open'); }
+
+/* ── TOAST ── */
+let toastTimer;
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => t.classList.remove('show'), 3000);
+}
+
+/* ── TABLE SEARCH ── */
+function filterTable(q) {
+  q = q.toLowerCase();
+  document.querySelectorAll('#crmTable tbody tr').forEach(row => {
+    row.style.display = row.textContent.toLowerCase().includes(q) ? '' : 'none';
+  });
+}
+
+/* ── A-Z DATA ── */
+const AZ_DATA = {
+  funnel: {
+    num:'01', name:'Funnel Analysis', cat:'funnel', icon:'📊',
+    tag:'CONVERSION · FUNNEL',
+    en: {
+      intro: 'Funnel analysis shows how users move through a series of steps toward a goal — and where they drop off. It is the foundation of product analytics. Every product has a funnel: acquisition → activation → retention → revenue → referral.',
+      when: 'Use funnel analysis when you want to understand conversion rates, find bottlenecks in onboarding, checkout, or any multi-step flow. Segment by device, channel, and user type to find hidden problems.',
+      sql: `-- Funnel Analysis SQL (PostgreSQL)\nSELECT\n  step,\n  COUNT(DISTINCT user_id)       AS users,\n  ROUND(COUNT(DISTINCT user_id)::numeric /\n    FIRST_VALUE(COUNT(DISTINCT user_id))\n    OVER (ORDER BY step_order)\n    * 100, 1)                   AS pct_of_top\nFROM (\n  SELECT user_id, 'visited'   AS step, 1 AS step_order FROM page_views\n  UNION ALL\n  SELECT user_id, 'signed_up' AS step, 2 AS step_order FROM signups\n  UNION ALL\n  SELECT user_id, 'activated' AS step, 3 AS step_order FROM activations\n  UNION ALL\n  SELECT user_id, 'converted' AS step, 4 AS step_order FROM conversions\n) funnel\nGROUP BY step, step_order\nORDER BY step_order;`,
+      tip: '💡 Pro Tip: Segment your funnel by acquisition channel. A 35% overall conversion might hide 60% mobile vs 10% desktop — completely different problems requiring different solutions.',
+      chart: 'funnel'
+    },
+    ar: {
+      intro: 'تحليل القمع يُظهر كيف يتحرك المستخدمون عبر سلسلة من الخطوات نحو هدف — وأين يتركون. إنه أساس تحليلات المنتج.',
+      when: 'استخدم تحليل القمع عندما تريد فهم معدلات التحويل، والعثور على الاختناقات في الإعداد أو الدفع أو أي تدفق متعدد الخطوات.',
+      sql: `-- تحليل القمع (PostgreSQL)\nSELECT step, COUNT(DISTINCT user_id) AS users\nFROM funnel_events\nGROUP BY step ORDER BY step_order;`,
+      tip: '💡 نصيحة: قسّم القمع حسب قناة الاكتساب. معدل تحويل 35% إجمالي قد يخفي 60% على الجوال مقابل 10% على الحاسوب.',
+      chart: 'funnel'
+    },
+    es: {
+      intro: 'El análisis de embudo muestra cómo los usuarios avanzan por una serie de pasos hacia un objetivo — y dónde abandonan. Es la base del análisis de productos.',
+      when: 'Usa el análisis de embudo cuando quieras entender las tasas de conversión, encontrar cuellos de botella en la incorporación, checkout o cualquier flujo de múltiples pasos.',
+      sql: `-- Análisis de Embudo (PostgreSQL)\nSELECT step, COUNT(DISTINCT user_id) AS usuarios\nFROM funnel_events\nGROUP BY step ORDER BY step_order;`,
+      tip: '💡 Consejo: Segmenta tu embudo por canal de adquisición. Un 35% de conversión general puede ocultar 60% móvil vs 10% escritorio.',
+      chart: 'funnel'
+    }
+  },
+  retention: {
+    num:'02', name:'Retention Analysis', cat:'retention', icon:'🔄',
+    tag:'RETENTION · ENGAGEMENT',
+    en: {
+      intro: 'Retention analysis measures how many users return to your product over time. It is the single most important signal of product-market fit. High retention = users find lasting value. Low retention = something is broken.',
+      when: 'Monitor D1, D7, D30 retention as core health metrics. Use retention analysis to track if product changes improved user return rates. Benchmark: D30 retention above 25% is considered strong for consumer apps.',
+      sql: `-- D1/D7/D30 Retention (PostgreSQL)\nSELECT\n  DATE(first_seen)               AS cohort_date,\n  COUNT(DISTINCT user_id)        AS cohort_size,\n  COUNT(DISTINCT CASE WHEN days_since_first = 1  THEN user_id END) AS d1,\n  COUNT(DISTINCT CASE WHEN days_since_first = 7  THEN user_id END) AS d7,\n  COUNT(DISTINCT CASE WHEN days_since_first = 30 THEN user_id END) AS d30\nFROM (\n  SELECT\n    u.user_id,\n    u.first_seen,\n    (DATE(e.event_date) - DATE(u.first_seen)) AS days_since_first\n  FROM users u\n  JOIN events e USING (user_id)\n) sub\nGROUP BY cohort_date\nORDER BY cohort_date;`,
+      tip: '💡 Pro Tip: Flat retention curve (stabilizes after week 2) = strong core. Continuously declining = users never find the aha moment.',
+      chart: 'line'
+    },
+    ar: {
+      intro: 'تحليل الاحتفاظ يقيس عدد المستخدمين الذين يعودون إلى منتجك بمرور الوقت. إنه أهم إشارة على مدى ملاءمة المنتج للسوق.',
+      when: 'راقب الاحتفاظ في اليوم 1 و7 و30 كمقاييس صحة أساسية. الاحتفاظ في اليوم 30 فوق 25% يُعتبر قوياً.',
+      sql: `-- الاحتفاظ D1/D7/D30 (PostgreSQL)\nSELECT cohort_date, d1_retention, d7_retention, d30_retention\nFROM retention_analysis;`,
+      tip: '💡 نصيحة: منحنى احتفاظ مستقر = قاعدة قوية. منحنى يتراجع باستمرار = المستخدمون لا يجدون قيمة.',
+      chart: 'line'
+    },
+    es: {
+      intro: 'El análisis de retención mide cuántos usuarios regresan a tu producto con el tiempo. Es la señal más importante de ajuste producto-mercado.',
+      when: 'Monitorea la retención D1, D7, D30 como métricas de salud fundamentales. Retención D30 superior al 25% se considera fuerte para apps de consumo.',
+      sql: `-- Retención D1/D7/D30 (PostgreSQL)\nSELECT cohort_date, retencion_d1, retencion_d7, retencion_d30\nFROM analisis_retencion;`,
+      tip: '💡 Consejo: Curva de retención plana = base sólida. Curva continuamente descendente = los usuarios nunca encuentran el momento "aha".',
+      chart: 'line'
+    }
+  },
+  cohort: {
+    num:'03', name:'Cohort Analysis', cat:'retention', icon:'🔢',
+    tag:'RETENTION · COHORT',
+    en: {
+      intro: 'Cohort analysis groups users by a shared characteristic — usually when they first joined — and tracks their behavior over time together. This lets you compare how different groups behave and measure the impact of product changes.',
+      when: 'Use cohort analysis to see if product changes improved retention for new users vs old users. Compare Eid/Ramadan cohorts vs normal period cohorts. Essential for measuring seasonality impact.',
+      sql: `-- Cohort Retention Matrix (PostgreSQL)\nWITH cohorts AS (\n  SELECT\n    user_id,\n    DATE_TRUNC('month', first_order_date) AS cohort_month\n  FROM users\n),\norders_by_month AS (\n  SELECT\n    o.user_id,\n    DATE_TRUNC('month', o.order_date) AS order_month\n  FROM orders o\n)\nSELECT\n  c.cohort_month,\n  COUNT(DISTINCT c.user_id)             AS cohort_size,\n  COUNT(DISTINCT CASE\n    WHEN om.order_month = c.cohort_month\n    THEN c.user_id END)                 AS month_0,\n  COUNT(DISTINCT CASE\n    WHEN om.order_month = c.cohort_month + INTERVAL '1 month'\n    THEN c.user_id END)                 AS month_1,\n  COUNT(DISTINCT CASE\n    WHEN om.order_month = c.cohort_month + INTERVAL '2 months'\n    THEN c.user_id END)                 AS month_2\nFROM cohorts c\nLEFT JOIN orders_by_month om USING (user_id)\nGROUP BY c.cohort_month\nORDER BY c.cohort_month;`,
+      tip: '💡 Pro Tip: When comparing cohorts from Ramadan vs regular months, always normalize by cohort size — Ramadan cohorts tend to be larger and behave differently.',
+      chart: 'cohort'
+    },
+    ar: {
+      intro: 'تحليل المجموعة يُجمّع المستخدمين بخاصية مشتركة — عادةً متى انضموا — ويتتبع سلوكهم معاً عبر الزمن.',
+      when: 'استخدمه لمقارنة مجموعات رمضان والعيد بالمجموعات العادية وقياس أثر التغييرات.',
+      sql: `-- مصفوفة احتفاظ المجموعات\nSELECT cohort_month, cohort_size, month_0, month_1, month_2\nFROM cohort_matrix ORDER BY cohort_month;`,
+      tip: '💡 نصيحة: عند مقارنة مجموعات رمضان بالشهور العادية، قم دائماً بالتطبيع حسب حجم المجموعة.',
+      chart: 'cohort'
+    },
+    es: {
+      intro: 'El análisis de cohortes agrupa usuarios por una característica compartida — generalmente cuándo se unieron — y rastrea su comportamiento juntos a lo largo del tiempo.',
+      when: 'Úsalo para ver si los cambios del producto mejoraron la retención de nuevos vs. antiguos usuarios.',
+      sql: `-- Matriz de Retención de Cohortes\nSELECT cohort_month, cohort_size, mes_0, mes_1, mes_2\nFROM cohort_matrix ORDER BY cohort_month;`,
+      tip: '💡 Consejo: Al comparar cohortes de temporada alta vs normal, normaliza siempre por tamaño de cohorte.',
+      chart: 'cohort'
+    }
+  },
+  growth: {
+    num:'04', name:'Growth Metrics (DAU/MAU)', cat:'growth', icon:'📈',
+    tag:'GROWTH · DAU · MAU',
+    en: {
+      intro: 'Growth metrics quantify the expansion and engagement health of your product. DAU (Daily Active Users), WAU (Weekly), MAU (Monthly) and their ratios are core executive KPIs that tell you how sticky your product is.',
+      when: 'Use growth metrics for executive reporting, investor updates, and weekly health checks. DAU/MAU ratio above 20% = strong daily habit. Above 50% = exceptional (WhatsApp level).',
+      sql: `-- DAU / MAU / DAU:MAU Ratio (PostgreSQL)\nSELECT\n  DATE(event_date)                          AS date,\n  COUNT(DISTINCT user_id)                   AS dau,\n  COUNT(DISTINCT user_id)\n    OVER (ORDER BY DATE(event_date)\n    ROWS BETWEEN 29 PRECEDING AND CURRENT ROW) AS mau_rolling,\n  ROUND(\n    COUNT(DISTINCT user_id)::numeric /\n    NULLIF(COUNT(DISTINCT user_id)\n      OVER (ORDER BY DATE(event_date)\n      ROWS BETWEEN 29 PRECEDING AND CURRENT ROW), 0)\n    * 100, 1\n  )                                         AS dau_mau_ratio\nFROM events\nGROUP BY DATE(event_date)\nORDER BY date;`,
+      tip: '💡 Pro Tip: Track DAU/MAU over time, not just as a snapshot. Improving DAU/MAU from 15% to 25% over 6 months shows product is becoming a habit.',
+      chart: 'bar'
+    },
+    ar: {
+      intro: 'مقاييس النمو تقيس التوسع وصحة التفاعل في منتجك. DAU وMAU ونسبتهما مؤشرات تنفيذية أساسية.',
+      when: 'استخدمها للتقارير التنفيذية وتحديثات المستثمرين. نسبة DAU/MAU فوق 20% = عادة يومية قوية.',
+      sql: `-- DAU / MAU\nSELECT date, dau, mau_rolling, dau_mau_ratio\nFROM growth_metrics ORDER BY date;`,
+      tip: '💡 نصيحة: تتبع DAU/MAU عبر الزمن وليس فقط كلقطة واحدة.',
+      chart: 'bar'
+    },
+    es: {
+      intro: 'Las métricas de crecimiento cuantifican la expansión y la salud del engagement. DAU, WAU, MAU y sus ratios son KPIs ejecutivos clave.',
+      when: 'Úsalas para informes ejecutivos y actualizaciones a inversores. DAU/MAU ratio superior al 20% = hábito diario fuerte.',
+      sql: `-- DAU / MAU\nSELECT fecha, dau, mau_rolling, ratio_dau_mau\nFROM metricas_crecimiento ORDER BY fecha;`,
+      tip: '💡 Consejo: Rastrea DAU/MAU a lo largo del tiempo, no solo como instantánea.',
+      chart: 'bar'
+    }
+  },
+  ab: {
+    num:'05', name:'A/B Testing', cat:'growth', icon:'🧪',
+    tag:'EXPERIMENTATION · GROWTH',
+    en: {
+      intro: 'A/B testing (split testing) compares two versions of a feature or design to determine which performs better — based on data, not opinions. It removes guesswork from product decisions.',
+      when: 'Use A/B testing with minimum ~1,000 users per variant. Run for at least 2 full weeks to capture weekly patterns. Measure primary metric (conversion) and secondary metrics (LTV, churn).',
+      sql: `-- A/B Test Results (PostgreSQL)\nSELECT\n  variant,\n  COUNT(DISTINCT user_id)                                AS users,\n  SUM(converted)                                         AS conversions,\n  ROUND(AVG(converted::numeric) * 100, 2)                AS cvr_pct,\n  ROUND(AVG(revenue), 2)                                 AS avg_revenue,\n  -- Lift vs control\n  ROUND((AVG(converted::numeric) -\n    FIRST_VALUE(AVG(converted::numeric))\n    OVER (ORDER BY variant)) * 100, 2)                   AS lift_pct\nFROM ab_test_results\nWHERE test_name = 'checkout_v2'\nGROUP BY variant\nORDER BY variant;`,
+      tip: '💡 Pro Tip: Always check for novelty effect — users engage more with new things initially. If variant B wins in week 1 but loses in week 3, it was novelty not real improvement.',
+      chart: 'bar'
+    },
+    ar: {
+      intro: 'اختبار A/B يقارن نسختين من ميزة أو تصميم لتحديد أيهما أفضل أداءً — بناءً على البيانات لا الآراء.',
+      when: 'استخدمه مع 1000 مستخدم على الأقل لكل متغير. اشغّله لمدة أسبوعين على الأقل.',
+      sql: `-- نتائج اختبار A/B\nSELECT variant, users, conversions, cvr_pct, lift_pct\nFROM ab_test_results WHERE test_name = 'checkout_v2';`,
+      tip: '💡 نصيحة: تحقق دائماً من تأثير الجدة — المستخدمون يتفاعلون أكثر مع الأشياء الجديدة مبدئياً.',
+      chart: 'bar'
+    },
+    es: {
+      intro: 'Las pruebas A/B comparan dos versiones de una función o diseño para determinar cuál funciona mejor — basado en datos, no en opiniones.',
+      when: 'Úsalo con mínimo ~1,000 usuarios por variante. Ejecuta durante al menos 2 semanas completas.',
+      sql: `-- Resultados A/B Test\nSELECT variante, usuarios, conversiones, cvr_pct, lift_pct\nFROM resultados_ab WHERE test_name = 'checkout_v2';`,
+      tip: '💡 Consejo: Verifica siempre el efecto novedad — los usuarios interactúan más con cosas nuevas inicialmente.',
+      chart: 'bar'
+    }
+  },
+  churn: {
+    num:'06', name:'Churn Analysis', cat:'retention', icon:'📉',
+    tag:'RETENTION · HEALTH',
+    en: {
+      intro: 'Churn analysis identifies how many users stop using your product and why. High churn = users are not finding lasting value. Reducing churn by even 1% can dramatically increase LTV and revenue.',
+      when: 'Run churn analysis monthly. Define churn based on your product: for QSR it might be 60+ days without order. Segment churned users by type, channel, and last behavior before churning.',
+      sql: `-- Churn Analysis with Segmentation (PostgreSQL)\nWITH last_activity AS (\n  SELECT\n    user_id,\n    MAX(order_date)                          AS last_order,\n    SUM(amount)                              AS ltv,\n    COUNT(order_id)                          AS total_orders,\n    NOW() - MAX(order_date)                  AS inactive_duration\n  FROM orders\n  GROUP BY user_id\n)\nSELECT\n  CASE\n    WHEN inactive_duration > INTERVAL '120 days' THEN 'Churned'\n    WHEN inactive_duration > INTERVAL '60 days'  THEN 'At Risk'\n    WHEN inactive_duration > INTERVAL '30 days'  THEN 'Cooling'\n    ELSE 'Active'\n  END                                        AS churn_status,\n  COUNT(*)                                   AS users,\n  ROUND(AVG(ltv)::numeric, 2)               AS avg_ltv,\n  ROUND(AVG(total_orders)::numeric, 1)      AS avg_orders\nFROM last_activity\nGROUP BY churn_status;`,
+      tip: '💡 Pro Tip: Build a churn prediction model using recency. Users who haven\'t ordered in 45 days are 3x more likely to churn — trigger a reactivation campaign before day 60.',
+      chart: 'funnel'
+    },
+    ar: {
+      intro: 'تحليل التراجع يحدد عدد المستخدمين الذين يتوقفون عن استخدام منتجك ولماذا. تقليل التراجع بنسبة 1% فقط يمكن أن يزيد LTV والإيرادات بشكل كبير.',
+      when: 'شغّل تحليل التراجع شهرياً. عرّف التراجع بناءً على منتجك.',
+      sql: `-- تحليل التراجع مع التجزئة\nSELECT churn_status, users, avg_ltv\nFROM churn_analysis GROUP BY churn_status;`,
+      tip: '💡 نصيحة: ابنِ نموذج تنبؤ بالتراجع باستخدام الحداثة. المستخدمون الذين لم يطلبوا منذ 45 يوماً أكثر عرضة للتراجع بمقدار 3 أضعاف.',
+      chart: 'funnel'
+    },
+    es: {
+      intro: 'El análisis de abandono identifica cuántos usuarios dejan de usar tu producto y por qué. Reducir el churn en solo 1% puede aumentar dramáticamente el LTV.',
+      when: 'Ejecuta el análisis de abandono mensualmente. Define el abandono según tu producto.',
+      sql: `-- Análisis de Abandono con Segmentación\nSELECT estado_abandono, usuarios, ltv_promedio\nFROM analisis_churn GROUP BY estado_abandono;`,
+      tip: '💡 Consejo: Construye un modelo predictivo usando recencia. Los usuarios sin pedidos en 45 días tienen 3x más probabilidad de abandonar.',
+      chart: 'funnel'
+    }
+  },
+  rfm: {
+    num:'07', name:'RFM Segmentation', cat:'funnel', icon:'🎯',
+    tag:'CRM · SEGMENTATION',
+    en: {
+      intro: 'RFM (Recency, Frequency, Monetary) is the most powerful customer segmentation framework. It scores every customer on three dimensions and automatically creates meaningful segments without needing pre-defined columns.',
+      when: 'Use RFM when you want to build targeted CRM campaigns, understand customer value distribution, or identify your best customers and at-risk segments. Works with any orders table.',
+      sql: `-- Full RFM Segmentation (PostgreSQL)\nWITH rfm_raw AS (\n  SELECT\n    phone_number,\n    MAX(order_date)                          AS last_order,\n    COUNT(order_id)                          AS frequency,\n    SUM(amount)                              AS monetary,\n    NOW() - MAX(order_date)                  AS recency_duration\n  FROM orders\n  GROUP BY phone_number\n),\nrfm_scored AS (\n  SELECT *,\n    NTILE(5) OVER (ORDER BY recency_duration ASC)  AS r_score,\n    NTILE(5) OVER (ORDER BY frequency ASC)         AS f_score,\n    NTILE(5) OVER (ORDER BY monetary ASC)          AS m_score\n  FROM rfm_raw\n)\nSELECT\n  phone_number,\n  r_score, f_score, m_score,\n  (r_score + f_score + m_score)              AS rfm_total,\n  CASE\n    WHEN r_score >= 4 AND f_score >= 4       THEN 'Champions'\n    WHEN r_score >= 3 AND f_score >= 3       THEN 'Loyal Customers'\n    WHEN r_score >= 4 AND f_score <= 2       THEN 'New Customers'\n    WHEN r_score <= 2 AND f_score >= 3       THEN 'At Risk'\n    WHEN r_score <= 2 AND f_score <= 2       THEN 'Lost'\n    ELSE 'Potential Loyalist'\n  END                                        AS rfm_segment\nFROM rfm_scored\nORDER BY rfm_total DESC;`,
+      tip: '💡 Pro Tip: Champions (R5 F5 M5) typically represent 10% of customers but 40%+ of revenue. Protect them with exclusive experiences. At-Risk customers (R2 F4) need reactivation campaigns immediately.',
+      chart: 'bar'
+    },
+    ar: {
+      intro: 'RFM (الحداثة، التكرار، القيمة النقدية) هو إطار تجزئة العملاء الأكثر قوة. يُقيّم كل عميل على ثلاثة أبعاد.',
+      when: 'استخدمه عند بناء حملات CRM مستهدفة أو فهم توزيع قيمة العملاء.',
+      sql: `-- تجزئة RFM الكاملة\nSELECT phone_number, r_score, f_score, m_score, rfm_segment\nFROM rfm_scored ORDER BY rfm_total DESC;`,
+      tip: '💡 نصيحة: الأبطال يمثلون عادةً 10% من العملاء لكن 40%+ من الإيرادات.',
+      chart: 'bar'
+    },
+    es: {
+      intro: 'RFM (Recencia, Frecuencia, Monetario) es el framework de segmentación de clientes más poderoso. Puntúa cada cliente en tres dimensiones.',
+      when: 'Úsalo cuando quieras construir campañas CRM dirigidas o entender la distribución del valor del cliente.',
+      sql: `-- Segmentación RFM Completa\nSELECT telefono, r_score, f_score, m_score, segmento_rfm\nFROM rfm_puntuado ORDER BY rfm_total DESC;`,
+      tip: '💡 Consejo: Los campeones representan típicamente el 10% de clientes pero el 40%+ de ingresos.',
+      chart: 'bar'
+    }
+  },
+  ltv: {
+    num:'08', name:'LTV Modeling', cat:'growth', icon:'💰',
+    tag:'REVENUE · LTV',
+    en: {
+      intro: 'Lifetime Value (LTV) is the total revenue a customer generates over their entire relationship with your product. It\'s the most important metric for sustainable growth — it determines how much you can afford to spend on acquisition.',
+      when: 'Calculate LTV to justify CAC, segment customers by value, and measure if product changes improve long-term revenue. You don\'t need a pre-built LTV column — you build it from orders data.',
+      sql: `-- LTV Calculation + Segmentation (PostgreSQL)\nSELECT\n  c.phone_number,\n  MAX(c.name)                              AS name,\n  COUNT(o.order_id)                        AS total_orders,\n  ROUND(SUM(o.amount)::numeric, 2)         AS ltv,\n  ROUND(AVG(o.amount)::numeric, 2)         AS avg_order_value,\n  MAX(o.order_date) - MIN(o.order_date)    AS customer_lifespan,\n  NOW() - MAX(o.order_date)               AS days_since_last,\n  CASE\n    WHEN SUM(o.amount) > 1000             THEN 'High Value'\n    WHEN SUM(o.amount) BETWEEN 300 AND 999 THEN 'Mid Value'\n    WHEN SUM(o.amount) BETWEEN 50 AND 299  THEN 'Low Value'\n    ELSE 'Single Purchase'\n  END                                      AS ltv_tier\nFROM customers c\nLEFT JOIN orders o ON o.phone_number = c.phone_number\nGROUP BY c.phone_number\nHAVING SUM(o.amount) IS NOT NULL\nORDER BY ltv DESC;`,
+      tip: '💡 Pro Tip: LTV:CAC ratio of 3:1 is the golden benchmark. Below 1:1 = you\'re losing money per customer. Above 5:1 = you\'re underinvesting in acquisition.',
+      chart: 'bar'
+    },
+    ar: {
+      intro: 'قيمة العمر الافتراضي هي إجمالي الإيرادات التي يولدها العميل طوال علاقته بمنتجك. إنه أهم مقياس للنمو المستدام.',
+      when: 'احسب LTV لتبرير CAC، وتجزئة العملاء حسب القيمة، وقياس ما إذا كانت تغييرات المنتج تحسن الإيرادات طويلة الأجل.',
+      sql: `-- حساب LTV + التجزئة\nSELECT phone_number, ltv, avg_order_value, ltv_tier\nFROM ltv_analysis ORDER BY ltv DESC;`,
+      tip: '💡 نصيحة: نسبة LTV:CAC 3:1 هي المعيار الذهبي. أقل من 1:1 = تخسر مالاً على كل عميل.',
+      chart: 'bar'
+    },
+    es: {
+      intro: 'El Valor de Vida del Cliente (LTV) es el ingreso total que genera un cliente durante toda su relación con tu producto. Es la métrica más importante para el crecimiento sostenible.',
+      when: 'Calcula LTV para justificar el CAC, segmentar clientes por valor y medir si los cambios del producto mejoran los ingresos a largo plazo.',
+      sql: `-- Cálculo LTV + Segmentación\nSELECT telefono, ltv, valor_promedio_pedido, nivel_ltv\nFROM analisis_ltv ORDER BY ltv DESC;`,
+      tip: '💡 Consejo: Ratio LTV:CAC de 3:1 es el estándar dorado. Por debajo de 1:1 = estás perdiendo dinero por cliente.',
+      chart: 'bar'
+    }
+  },
+  frequency: {
+    num:'09', name:'Frequency Segmentation', cat:'retention', icon:'🔁',
+    tag:'BEHAVIOR · FREQUENCY',
+    en: {
+      intro: 'Frequency segmentation groups customers by how often they purchase or engage within a given period — typically 28-day or monthly cycles. It reveals the behavioral engine behind LTV.',
+      when: 'Use frequency segmentation to understand if your product drives habitual usage (3x+ per month) or occasional use. Identify frequency migration: are customers moving from 1x to 2x per month? That\'s a strong growth signal.',
+      sql: `-- 28-Day Frequency Segmentation (PostgreSQL)\nWITH order_counts AS (\n  SELECT\n    phone_number,\n    COUNT(order_id)            AS orders_28d\n  FROM orders\n  WHERE order_date >= NOW() - INTERVAL '28 days'\n  GROUP BY phone_number\n)\nSELECT\n  CASE\n    WHEN orders_28d >= 8  THEN '8x+ (Super Frequent)'\n    WHEN orders_28d >= 4  THEN '4-7x (High Freq)'\n    WHEN orders_28d >= 2  THEN '2-3x (Regular)'\n    WHEN orders_28d = 1   THEN '1x (Occasional)'\n    ELSE '0x (Lapsed)'\n  END                          AS frequency_bucket,\n  COUNT(*)                     AS customers,\n  ROUND(AVG(orders_28d),1)     AS avg_orders\nFROM order_counts\nGROUP BY frequency_bucket\nORDER BY avg_orders DESC;`,
+      tip: '💡 Pro Tip: Track frequency migration month over month. If 20% of 1x customers moved to 2x, your engagement initiatives are working. This is more actionable than just tracking overall frequency.',
+      chart: 'bar'
+    },
+    ar: {
+      intro: 'تجزئة التكرار تُجمّع العملاء حسب مدى تكرار شرائهم أو تفاعلهم خلال فترة معينة — عادةً دورات 28 يوماً أو شهرية.',
+      when: 'استخدمها لفهم ما إذا كان منتجك يدفع إلى الاستخدام الاعتيادي أو العرضي.',
+      sql: `-- تجزئة التكرار 28 يوم\nSELECT frequency_bucket, customers, avg_orders\nFROM frequency_segmentation ORDER BY avg_orders DESC;`,
+      tip: '💡 نصيحة: تتبع هجرة التكرار شهراً بعد شهر. إذا انتقل 20% من عملاء 1x إلى 2x، فإن مبادرات التفاعل تعمل.',
+      chart: 'bar'
+    },
+    es: {
+      intro: 'La segmentación de frecuencia agrupa a los clientes según la frecuencia de sus compras o interacciones dentro de un período — típicamente ciclos de 28 días o mensuales.',
+      when: 'Úsala para entender si tu producto impulsa el uso habitual (3x+ al mes) o el uso ocasional.',
+      sql: `-- Segmentación de Frecuencia 28 Días\nSELECT bucket_frecuencia, clientes, pedidos_promedio\nFROM segmentacion_frecuencia ORDER BY pedidos_promedio DESC;`,
+      tip: '💡 Consejo: Rastrea la migración de frecuencia mes a mes. Si el 20% de clientes 1x se movió a 2x, tus iniciativas de engagement están funcionando.',
+      chart: 'bar'
+    }
+  },
+  attach: {
+    num:'10', name:'Attach Rate Analysis', cat:'funnel', icon:'🔗',
+    tag:'PRODUCT · UPSELL',
+    en: {
+      intro: 'Attach rate measures how often a secondary product (e.g., drink, add-on, side item) is purchased alongside a primary product. High attach rate = effective upsell. Low attach rate = missed revenue and menu engineering opportunity.',
+      when: 'Use attach rate analysis for menu optimization, promotional bundle design, and understanding which combos drive highest LTV. Critical for QSR and e-commerce products with modifiers.',
+      sql: `-- Attach Rate Analysis (PostgreSQL)\nWITH main_orders AS (\n  SELECT order_id, phone_number\n  FROM order_items\n  WHERE product_category = 'main'\n),\nwith_addon AS (\n  SELECT DISTINCT mo.order_id\n  FROM main_orders mo\n  JOIN order_items oi ON oi.order_id = mo.order_id\n  WHERE oi.product_category = 'add_on'\n)\nSELECT\n  COUNT(mo.order_id)                          AS main_orders,\n  COUNT(wa.order_id)                          AS orders_with_addon,\n  ROUND(COUNT(wa.order_id)::numeric /\n    NULLIF(COUNT(mo.order_id), 0) * 100, 1)  AS attach_rate_pct\nFROM main_orders mo\nLEFT JOIN with_addon wa ON wa.order_id = mo.order_id;`,
+      tip: '💡 Pro Tip: Segment attach rate by order channel (app vs in-store), daypart, and customer segment. Attach rate is often 2x higher on digital channels where upsell prompts are easiest.',
+      chart: 'bar'
+    },
+    ar: {
+      intro: 'معدل الإرفاق يقيس مدى تكرار شراء منتج ثانوي (مثل مشروب أو إضافة) جانباً مع منتج رئيسي.',
+      when: 'استخدمه لتحسين القائمة وتصميم الباقات الترويجية وفهم أي المجموعات تحقق أعلى LTV.',
+      sql: `-- تحليل معدل الإرفاق\nSELECT main_orders, orders_with_addon, attach_rate_pct\nFROM attach_rate_analysis;`,
+      tip: '💡 نصيحة: قسّم معدل الإرفاق حسب قناة الطلب. غالباً ما يكون أعلى بمقدار 2x على القنوات الرقمية.',
+      chart: 'bar'
+    },
+    es: {
+      intro: 'La tasa de adjunto mide con qué frecuencia se compra un producto secundario (bebida, complemento) junto con un producto principal.',
+      when: 'Úsalo para optimización de menú, diseño de paquetes promocionales y entender qué combos generan mayor LTV.',
+      sql: `-- Análisis de Tasa de Adjunto\nSELECT pedidos_principales, pedidos_con_addon, tasa_adjunto_pct\nFROM analisis_tasa_adjunto;`,
+      tip: '💡 Consejo: Segmenta la tasa de adjunto por canal de pedido. Generalmente es 2x mayor en canales digitales donde los prompts de upsell son más efectivos.',
+      chart: 'bar'
+    }
+  },
+  cannibalization: {
+    num:'11', name:'Cannibalization Detection', cat:'growth', icon:'⚠️',
+    tag:'PRODUCT · LAUNCH',
+    en: {
+      intro: 'Cannibalization occurs when a new product launch reduces sales of an existing product instead of growing total revenue. Detecting it early prevents costly product mistakes and protects your existing portfolio.',
+      when: 'Run cannibalization analysis for every new product launch — especially during soft launch phase. Compare before/after attach rates, basket composition, and revenue per item for impacted products.',
+      sql: `-- Cannibalization Detection (PostgreSQL)\nWITH pre_launch AS (\n  SELECT\n    product,\n    COUNT(order_id)                AS orders_pre,\n    ROUND(SUM(amount)::numeric,2)  AS revenue_pre\n  FROM orders\n  WHERE order_date BETWEEN :launch_date - INTERVAL '30 days' AND :launch_date\n  GROUP BY product\n),\npost_launch AS (\n  SELECT\n    product,\n    COUNT(order_id)                AS orders_post,\n    ROUND(SUM(amount)::numeric,2)  AS revenue_post\n  FROM orders\n  WHERE order_date BETWEEN :launch_date AND :launch_date + INTERVAL '30 days'\n  GROUP BY product\n)\nSELECT\n  pre.product,\n  pre.orders_pre,\n  post.orders_post,\n  post.orders_post - pre.orders_pre                  AS order_delta,\n  ROUND((post.orders_post - pre.orders_pre)::numeric /\n    NULLIF(pre.orders_pre,0) * 100, 1)               AS order_change_pct,\n  pre.revenue_pre,\n  post.revenue_post\nFROM pre_launch pre\nFULL JOIN post_launch post USING (product)\nORDER BY order_change_pct ASC;`,
+      tip: '💡 Pro Tip: Negative change % in an existing product after launch = potential cannibalization. Flag any product with >10% order decline post-launch and analyze basket overlap with the new product.',
+      chart: 'bar'
+    },
+    ar: {
+      intro: 'يحدث التآكل عندما يؤدي إطلاق منتج جديد إلى تقليل مبيعات منتج موجود بدلاً من تنمية إجمالي الإيرادات.',
+      when: 'شغّل تحليل التآكل لكل إطلاق منتج جديد — خاصةً خلال مرحلة الإطلاق التجريبي.',
+      sql: `-- اكتشاف التآكل\nSELECT product, order_delta, order_change_pct\nFROM cannibalization_detection ORDER BY order_change_pct ASC;`,
+      tip: '💡 نصيحة: نسبة تغيير سلبية في منتج موجود بعد الإطلاق = تآكل محتمل.',
+      chart: 'bar'
+    },
+    es: {
+      intro: 'La canibalización ocurre cuando el lanzamiento de un nuevo producto reduce las ventas de un producto existente en lugar de hacer crecer los ingresos totales.',
+      when: 'Ejecuta el análisis de canibalización para cada nuevo lanzamiento — especialmente durante la fase de lanzamiento suave.',
+      sql: `-- Detección de Canibalización\nSELECT producto, delta_pedidos, pct_cambio_pedidos\nFROM deteccion_canibalizacion ORDER BY pct_cambio_pedidos ASC;`,
+      tip: '💡 Consejo: Porcentaje de cambio negativo en un producto existente tras el lanzamiento = posible canibalización.',
+      chart: 'bar'
+    }
+  },
+  paid: {
+    num:'12', name:'Paid Media Measurement', cat:'marketing', icon:'📡',
+    tag:'MARKETING · PAID MEDIA',
+    en: {
+      intro: 'Paid media measurement tracks the efficiency and ROI of every advertising channel — social, search, influencer, programmatic. Without proper measurement, you\'re flying blind on where your marketing budget is working.',
+      when: 'Use paid media measurement weekly for performance monitoring. Build channel-level KPIs (CPI, CPC, CPO, ROAS) and compare against LTV to determine true ROI. Use Adjust API for mobile attribution.',
+      sql: `-- Paid Media KPIs (PostgreSQL)\nSELECT\n  channel,\n  campaign_name,\n  SUM(spend)                                       AS total_spend,\n  SUM(installs)                                    AS installs,\n  SUM(orders)                                      AS orders,\n  SUM(revenue)                                     AS revenue,\n  -- KPI calculations\n  ROUND(SUM(spend) / NULLIF(SUM(installs),0), 2)  AS cpi,\n  ROUND(SUM(spend) / NULLIF(SUM(clicks),0), 2)    AS cpc,\n  ROUND(SUM(spend) / NULLIF(SUM(orders),0), 2)    AS cpo,\n  ROUND(SUM(revenue) / NULLIF(SUM(spend),0), 2)   AS roas,\n  ROUND((SUM(revenue) - SUM(spend)) /\n    NULLIF(SUM(spend),0) * 100, 1)                 AS roi_pct\nFROM paid_media_data\nWHERE date >= CURRENT_DATE - INTERVAL '30 days'\nGROUP BY channel, campaign_name\nORDER BY roi_pct DESC;`,
+      tip: '💡 Pro Tip: ROAS tells you revenue per dollar spent, but ROI based on LTV tells you actual profit. A campaign with 2x ROAS but customers with $500 LTV beats a 5x ROAS campaign with $50 LTV customers.',
+      chart: 'bar'
+    },
+    ar: {
+      intro: 'قياس الإعلانات المدفوعة يتتبع كفاءة وعائد الاستثمار لكل قناة إعلانية — وسائل التواصل الاجتماعي، البحث، المؤثرون، الإعلانات البرامجية.',
+      when: 'استخدم قياس الإعلانات المدفوعة أسبوعياً لمراقبة الأداء. ابنِ مؤشرات KPI على مستوى القناة وقارنها بـ LTV.',
+      sql: `-- مؤشرات KPI للإعلانات المدفوعة\nSELECT channel, cpi, cpc, cpo, roas, roi_pct\nFROM paid_media_kpis ORDER BY roi_pct DESC;`,
+      tip: '💡 نصيحة: ROAS يخبرك بالإيرادات لكل دولار، لكن ROI المبني على LTV يخبرك بالربح الفعلي.',
+      chart: 'bar'
+    },
+    es: {
+      intro: 'La medición de medios pagados rastrea la eficiencia y el ROI de cada canal publicitario — redes sociales, búsqueda, influencers, programática.',
+      when: 'Usa la medición de medios pagados semanalmente para monitoreo de rendimiento. Construye KPIs por canal y compáralos con LTV.',
+      sql: `-- KPIs de Medios Pagados\nSELECT canal, cpi, cpc, cpo, roas, roi_pct\nFROM kpis_medios_pagados ORDER BY roi_pct DESC;`,
+      tip: '💡 Consejo: ROAS te dice ingresos por dólar gastado, pero ROI basado en LTV te dice la ganancia real.',
+      chart: 'bar'
+    }
+  }
+};
+
+let currentAZKey = 'funnel';
+let currentAZLang = 'en';
+let currentFilter = 'all';
+
+function buildAZSidebar() {
+  const sidebar = document.getElementById('azSidebar');
+  if(!sidebar) return;
+  sidebar.innerHTML = '';
+  Object.entries(AZ_DATA).forEach(([key, item]) => {
+    if(currentFilter !== 'all' && item.cat !== currentFilter) return;
+    const el = document.createElement('div');
+    el.className = 'az-item' + (key===currentAZKey ? ' active' : '');
+    el.innerHTML = `<span class="az-num">${item.num}</span><span style="font-size:16px">${item.icon}</span><span class="az-name">${item.name}</span>`;
+    el.onclick = () => { currentAZKey = key; buildAZSidebar(); loadAZ(key); };
+    sidebar.appendChild(el);
+  });
+}
+
+function loadAZ(key) {
+  currentAZKey = key;
+  const item = AZ_DATA[key];
+  if(!item) return;
+  const lang = currentLang in ['en','ar','es'] ? currentLang : 'en';
+  const d = item[lang] || item.en;
+  const content = document.getElementById('azContent');
+  if(!content) return;
+
+  let chartHTML = '';
+  if(d.chart==='funnel') {
+    chartHTML = `<div class="chart-example"><div class="chart-label">// FUNNEL CHART — RECOMMENDED VISUALIZATION</div>
+    <div class="funnel-chart">
+      <div class="funnel-step"><span class="funnel-lbl">Visited</span><div class="funnel-track"><div class="funnel-fill" style="width:100%;background:var(--teal)">10,000</div></div><span class="funnel-pct">100%</span></div>
+      <div class="funnel-step"><span class="funnel-lbl">Signed Up</span><div class="funnel-track"><div class="funnel-fill" style="width:60%;background:var(--teal)">6,000</div></div><span class="funnel-pct">60%</span></div>
+      <div class="funnel-step"><span class="funnel-lbl">Activated</span><div class="funnel-track"><div class="funnel-fill" style="width:35%;background:var(--violet)">3,500</div></div><span class="funnel-pct">35%</span></div>
+      <div class="funnel-step"><span class="funnel-lbl">Converted</span><div class="funnel-track"><div class="funnel-fill" style="width:18%;background:var(--violet)">1,800</div></div><span class="funnel-pct">18%</span></div>
+    </div></div>`;
+  } else if(d.chart==='line') {
+    chartHTML = `<div class="chart-example"><div class="chart-label">// LINE CHART — RECOMMENDED FOR TREND OVER TIME</div>
+    <div class="line-chart"><svg viewBox="0 0 400 100" preserveAspectRatio="none">
+      <defs><linearGradient id="ag" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#00D4AA" stop-opacity="0.3"/><stop offset="100%" stop-color="#00D4AA" stop-opacity="0"/></linearGradient></defs>
+      <path d="M0,5 L57,18 L114,32 L171,42 L228,52 L285,60 L342,66 L400,70" fill="none" stroke="#00D4AA" stroke-width="2.5"/>
+      <path d="M0,5 L57,18 L114,32 L171,42 L228,52 L285,60 L342,66 L400,70 L400,100 L0,100Z" fill="url(#ag)"/>
+    </svg></div></div>`;
+  } else if(d.chart==='cohort') {
+    chartHTML = `<div class="chart-example"><div class="chart-label">// COHORT TABLE — RECOMMENDED VISUALIZATION</div>
+    <div style="overflow-x:auto"><table style="width:100%;font-family:'JetBrains Mono',monospace;font-size:12px;border-collapse:collapse">
+      <tr><th style="padding:6px 10px;text-align:left;color:var(--muted);border-bottom:1px solid var(--border)">Cohort</th><th style="padding:6px 10px;color:var(--muted);border-bottom:1px solid var(--border)">Size</th><th style="padding:6px 10px;color:var(--muted);border-bottom:1px solid var(--border)">M+0</th><th style="padding:6px 10px;color:var(--muted);border-bottom:1px solid var(--border)">M+1</th><th style="padding:6px 10px;color:var(--muted);border-bottom:1px solid var(--border)">M+2</th><th style="padding:6px 10px;color:var(--muted);border-bottom:1px solid var(--border)">M+3</th></tr>
+      <tr><td style="padding:6px 10px;color:var(--text)">Jan 2025</td><td style="padding:6px 10px;color:var(--muted)">1,240</td><td style="padding:6px 10px;background:rgba(0,212,170,0.3);border-radius:4px;color:var(--teal)">100%</td><td style="padding:6px 10px;background:rgba(0,212,170,0.22);color:var(--teal)">68%</td><td style="padding:6px 10px;background:rgba(0,212,170,0.14);color:var(--teal)">52%</td><td style="padding:6px 10px;background:rgba(0,212,170,0.08);color:var(--teal)">41%</td></tr>
+      <tr><td style="padding:6px 10px;color:var(--text)">Feb 2025</td><td style="padding:6px 10px;color:var(--muted)">980</td><td style="padding:6px 10px;background:rgba(0,212,170,0.3);color:var(--teal)">100%</td><td style="padding:6px 10px;background:rgba(0,212,170,0.25);color:var(--teal)">72%</td><td style="padding:6px 10px;background:rgba(0,212,170,0.16);color:var(--teal)">55%</td><td style="padding:6px 10px;background:rgba(0,212,170,0.1);color:var(--teal)">44%</td></tr>
+      <tr><td style="padding:6px 10px;color:var(--text)">Mar 2025</td><td style="padding:6px 10px;color:var(--muted)">1,540</td><td style="padding:6px 10px;background:rgba(0,212,170,0.3);color:var(--teal)">100%</td><td style="padding:6px 10px;background:rgba(0,212,170,0.27);color:var(--teal)">76%</td><td style="padding:6px 10px;background:rgba(0,212,170,0.18);color:var(--teal)">58%</td><td style="padding:6px 10px">—</td></tr>
+    </table></div></div>`;
+  } else {
+    chartHTML = `<div class="chart-example"><div class="chart-label">// BAR CHART — RECOMMENDED FOR COMPARISON</div>
+    <div class="bar-chart-v">
+      <div class="bar-v-item" style="height:60%;background:linear-gradient(180deg,var(--teal),rgba(0,212,170,0.2))"></div>
+      <div class="bar-v-item" style="height:82%;background:linear-gradient(180deg,var(--violet),rgba(123,97,255,0.2))"></div>
+      <div class="bar-v-item" style="height:44%;background:linear-gradient(180deg,var(--teal),rgba(0,212,170,0.2))"></div>
+      <div class="bar-v-item" style="height:100%;background:linear-gradient(180deg,var(--blue),rgba(0,168,255,0.2))"></div>
+      <div class="bar-v-item" style="height:68%;background:linear-gradient(180deg,var(--violet),rgba(123,97,255,0.2))"></div>
+    </div></div>`;
+  }
+
+  content.innerHTML = `
+    <h2>${item.icon} ${item.name}</h2>
+    <div class="az-subtitle">${item.tag}</div>
+    <div class="content-lang-tabs">
+      <button class="content-lang-btn ${currentLang==='en'?'active':''}" onclick="switchContentLang('en',this,'${key}')">EN</button>
+      <button class="content-lang-btn ${currentLang==='ar'?'active':''}" onclick="switchContentLang('ar',this,'${key}')">AR</button>
+      <button class="content-lang-btn ${currentLang==='es'?'active':''}" onclick="switchContentLang('es',this,'${key}')">ES</button>
+    </div>
+    <p>${d.intro}</p>
+    <h3>📌 When to use it?</h3>
+    <p>${d.when}</p>
+    <h3>📊 Recommended Chart</h3>
+    ${chartHTML}
+    <h3>💾 SQL Query</h3>
+    <div class="sql-box">${d.sql}</div>
+    <div class="insight-box">${d.tip}</div>
+  `;
+}
+
+function switchContentLang(lang, btn, key) {
+  currentLang = lang;
+  localStorage.setItem('byadata-lang', lang);
+  document.querySelectorAll('.lang-btn').forEach(b => b.classList.toggle('active', b.textContent.toLowerCase()===lang));
+  document.documentElement.setAttribute('dir', lang==='ar'?'rtl':'ltr');
+  document.querySelectorAll('.content-lang-btn').forEach(b => b.classList.toggle('active', b===btn));
+  applyLang(lang, false);
+  loadAZ(key);
+}
+
+function filterAZ(cat, btn) {
+  currentFilter = cat;
+  document.querySelectorAll('.az-tab').forEach(t => t.classList.remove('active'));
+  btn.classList.add('active');
+  buildAZSidebar();
+  // Load first visible item
+  const first = Object.keys(AZ_DATA).find(k => cat==='all' || AZ_DATA[k].cat===cat);
+  if(first) loadAZ(first);
+}
+
+// Init A-Z on load
+buildAZSidebar();
+loadAZ('funnel');
+</script>
+</body>
+</html>
